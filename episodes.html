@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Episodes — 107 Wins</title>
+  <meta name="description" content="Browse all episodes of the 107 Wins Pod. Conversations about business building, tech trends, and proven tactics.">
+  <link rel="icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="container page">
+    <h1 class="section-title">All episodes</h1>
+    <p class="section-desc">Browse all episodes of the 107 Wins Pod.</p>
+    <div id="episodes-list"></div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="nav.js"></script>
+  <script src="episodes.js"></script>
+  <script src="site.js"></script>
+  <script>
+    var container = document.getElementById("episodes-list");
+    if (!episodes || episodes.length === 0) {
+      container.innerHTML = renderEmptyEpisodes();
+    } else {
+      episodes.sort(function(a, b) { return b.episodeNumber - a.episodeNumber; });
+      var html = "";
+      episodes.forEach(function(ep) {
+        html += renderEpisodeCard(ep, { showTopics: true, showLinks: true, showDate: true });
+      });
+      container.innerHTML = '<div class="card-list">' + html + "</div>";
+    }
+  </script>
+</body>
+</html>
