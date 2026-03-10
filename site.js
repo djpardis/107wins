@@ -43,7 +43,7 @@ function renderEpisodeCard(ep, options) {
   var descClass = "text-sm text-muted mt-2";
   if (truncateDesc) descClass += " line-clamp-2";
 
-  var cardAttr = clickable ? ' onclick="location.href=\'episodes.html\'" class="clickable"' : "";
+  var cardAttr = clickable ? ' onclick="location.href=\'episodes/\'" class="clickable"' : "";
 
   return '<div class="card card-hover"' + cardAttr + ">" +
     '<div class="feature-row">' +
@@ -86,6 +86,6 @@ function renderEmptyEpisodes() {
     '<div class="icon-box icon-box-lg">&#127911;</div>' +
     '<h2 class="font-bold heading-md mb-2">Coming soon</h2>' +
     '<p class="text-sm text-muted">We\'re working on our first episodes. Check back soon or follow us on social media for updates.</p>' +
-    '<div class="mt-6"><a href="follow.html" class="btn btn-primary">Follow us for updates &rarr;</a></div>' +
+    '<div class="mt-6"><a href="../follow/" class="btn btn-primary">Follow us for updates &rarr;</a></div>' +
   "</div>";
 }
