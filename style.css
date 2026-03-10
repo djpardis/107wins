@@ -7,6 +7,21 @@
   padding: 0;
 }
 
+/* Reserve space for scrollbar so layout doesn't shift when navigating between
+   short pages (no scrollbar) and long pages (scrollbar). Stops header/logo/menu shift.
+   Responsive: scrollbar-gutter everywhere (safe on mobile); overflow fallback only on
+   viewports where scrollbars typically take layout space (desktop). */
+html {
+  scrollbar-gutter: stable;
+}
+@supports not (scrollbar-gutter: stable) {
+  @media (min-width: 768px) {
+    html {
+      overflow-y: scroll; /* fallback on desktop only; mobile often has overlay scrollbar */
+    }
+  }
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #1a1a1a;
