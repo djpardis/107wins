@@ -47,7 +47,6 @@ img { max-width: 100%; height: auto; }
   padding-bottom: 48px;
 }
 
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; align-items: stretch; }
 .grid-2 > * { display: flex; }
 .grid-2 > * > .card { flex: 1; }
@@ -486,15 +485,15 @@ textarea.short { min-height: 80px; }
 
 .section-indent { padding-left: 52px; }
 .link-list { display: flex; gap: 6px; flex-wrap: wrap; }
-.home-section { padding-top: 24px; padding-bottom: 64px; }
 .home-section-flush { padding-bottom: 64px; }
+section.hero + section { padding-top: 24px; }
 .clickable { cursor: pointer; }
 
 /* === Responsive: tablet and below === */
 @media (max-width: 768px) {
   nav { display: none; }
   .hamburger { display: block; }
-  .grid-3, .grid-2 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
   .hero-inner { flex-direction: column; text-align: center; gap: 24px; }
   .hero-text p { margin-left: auto; margin-right: auto; }
   .hero-logo img { width: 180px; height: 180px; }
@@ -510,3 +509,13 @@ textarea.short { min-height: 80px; }
   .form-row { grid-template-columns: 1fr; }
   .cta-row { flex-direction: column; align-items: start; }
 }
+
+/* === Markdown posts (Eleventy) === */
+.post-body { color: #1a1a1a; line-height: 1.65; }
+.post-body p { margin-bottom: 1rem; }
+.post-body h2 { font-size: 1.25rem; font-weight: 700; margin: 1.5rem 0 0.5rem; }
+.post-body h3 { font-size: 1.05rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
+.post-body ul, .post-body ol { margin: 0 0 1rem 1.25rem; }
+.post-body li { margin-bottom: 0.35rem; }
+.post-body a { text-decoration: underline; }
+.post-body code { font-size: 0.9em; background: #f3f4f6; padding: 0.1em 0.35em; border-radius: 4px; }

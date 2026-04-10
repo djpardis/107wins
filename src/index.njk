@@ -1,0 +1,55 @@
+---
+layout: layouts/base.njk
+title: "107 Wins: Conversations about business, tech, and winning tactics"
+description: "The 107 Wins Pod hosts conversations about business building, tech trends, proven tactics, and learning new things."
+ogTitle: "107 Wins: Conversations about business, tech, and winning tactics"
+ogDescription: "The 107 Wins Pod hosts conversations about business building, tech trends, proven tactics, and learning new things."
+---
+{% import "macros/episode-card.njk" as ep %}
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="badge">New podcast</div>
+      <h1>The <span>107 Wins</span> Pod</h1>
+      <p>Conversations about business building, tech trends, proven tactics, and learning new things.</p>
+      <div class="btn-group">
+        <a href="/episodes/" class="btn btn-primary" data-testid="link-episodes">Browse episodes &rarr;</a>
+        <a href="/guest-request/" class="btn btn-outline" data-testid="link-guest-request">Be a guest</a>
+      </div>
+    </div>
+    <div class="hero-logo">
+      <img src="/images/107wins-logo.png" alt="107 Wins Club Logo">
+    </div>
+  </div>
+</section>
+
+{% set sortedEpisodes = episodes | sortEpisodesDesc %}
+{% if sortedEpisodes.length %}
+<section class="container home-section-flush">
+  <div class="flex-between mb-6">
+    <h2 class="section-title mb-0">Latest episodes</h2>
+    <a href="/episodes/" class="btn btn-outline btn-sm">View all &rarr;</a>
+  </div>
+  <div class="card-list">
+    {% for episode in sortedEpisodes %}
+    {% if loop.index0 < 3 %}
+    {{ ep.episodeCard(episode, clickable=true, truncateDesc=true) }}
+    {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section class="container home-section-flush">
+  <div class="card">
+    <div class="giants-card">
+      <img src="/images/2021giants.jpg" alt="2021 San Francisco Giants team at Oracle Park">
+      <div class="space-y-3">
+        <h2 class="font-bold heading-md">Why "107 wins"?</h2>
+        <p class="text-sm text-muted">The name celebrates the SF Giants' historic 2021 season when they won an incredible 107 regular season games, a franchise record. As dedicated fans who attended way too many games that season, we decided to honor that special year in our podcast name.</p>
+      </div>
+    </div>
+  </div>
+</section>

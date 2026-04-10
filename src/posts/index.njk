@@ -1,0 +1,27 @@
+---
+layout: layouts/base.njk
+title: "Posts — 107 Wins"
+description: "News and articles from the 107 Wins podcast."
+permalink: /posts/
+---
+
+<main class="container page">
+  <h1 class="section-title">Posts</h1>
+  <p class="section-desc">News and updates from the podcast.</p>
+
+  {% if collections.posts and collections.posts.length %}
+  <div class="card-list">
+    {% for post in collections.posts | sortPostsByDateDesc %}
+    <article class="card">
+      <h2 class="font-semibold heading-card mb-2"><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+      {% if post.data.description %}<p class="text-sm text-muted">{{ post.data.description }}</p>{% endif %}
+      {% if post.date %}<p class="text-xs text-muted mt-2">{{ post.date | readableDate }}</p>{% endif %}
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="card empty-state">
+    <p class="text-sm text-muted">No posts yet. Add Markdown files under <code class="text-xs">src/content/posts/</code>.</p>
+  </div>
+  {% endif %}
+</main>
