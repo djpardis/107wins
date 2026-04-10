@@ -1,0 +1,31 @@
+{% macro episodeCard(ep, showTopics=false, showLinks=false, showDate=false, clickable=false, truncateDesc=false) %}
+<div class="card card-hover{% if clickable %} clickable{% endif %}"{% if clickable %} onclick="location.href='/episodes/'"{% endif %}>
+  <div class="feature-row">
+    <div class="icon-box icon-box-lg">&#127908;</div>
+    <div class="feature-content">
+      <div class="flex-center-gap-sm">
+        <span class="badge-outline">EP {{ ep.episodeNumber }}</span>
+        <span class="text-xs text-muted">{{ ep.duration }}</span>
+        {% if showDate and ep.publishedAt %}<span class="text-xs text-muted">{{ ep.publishedAt }}</span>{% endif %}
+      </div>
+      <h3 class="font-semibold mt-2">{{ ep.title }}</h3>
+      <p class="text-sm text-muted mt-2{% if truncateDesc %} line-clamp-2{% endif %}">{{ ep.description }}</p>
+      {% if ep.guestName %}
+      <p class="text-xs text-muted mt-2">with <strong>{{ ep.guestName }}</strong>{% if ep.guestTitle %}, {{ ep.guestTitle }}{% endif %}</p>
+      {% endif %}
+      {% if showTopics and ep.topics and ep.topics.length %}
+      <div class="badge-row mt-4">
+        {% for t in ep.topics %}<span class="badge-outline">{{ t }}</span>{% endfor %}
+      </div>
+      {% endif %}
+      {% if showLinks %}
+      <div class="link-list mt-4">
+        {% if ep.youtubeUrl %}<a href="{{ ep.youtubeUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">YouTube</a>{% endif %}
+        {% if ep.spotifyUrl %}<a href="{{ ep.spotifyUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Spotify</a>{% endif %}
+        {% if ep.applePodcastsUrl %}<a href="{{ ep.applePodcastsUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Apple Podcasts</a>{% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endmacro %}

@@ -1,0 +1,8 @@
+[
+  { "name": "YouTube", "icon": "&#9654;", "url": "https://youtube.com/@107wins", "desc": "Watch our latest episodes and behind-the-scenes content" },
+  { "name": "Instagram", "icon": "&#128247;", "url": "https://instagram.com/107wins.club", "desc": "Get daily updates, stories, and visual content" },
+  { "name": "Bluesky", "icon": "&#9729;", "url": "https://bsky.app/profile/107wins.club", "desc": "Join the conversation on the decentralized social platform" },
+  { "name": "X", "icon": "&#120143;", "url": "https://x.com/107winsclub", "desc": "Real-time updates and podcast announcements" },
+  { "name": "Spotify", "icon": "&#9835;", "url": "https://open.spotify.com/show/107wins", "desc": "Listen to episodes on the world's largest audio platform" },
+  { "name": "Apple Podcasts", "icon": "&#127911;", "url": "https://podcasts.apple.com/podcast/107wins", "desc": "Stream episodes on Apple's native podcast app" }
+]

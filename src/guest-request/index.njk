@@ -1,0 +1,61 @@
+---
+layout: layouts/base.njk
+title: "Be a guest — 107 Wins"
+description: "Interested in being a guest on the 107 Wins podcast? Submit a request and we'll get back to you within a few days."
+permalink: /guest-request/
+---
+
+<main class="container page">
+  <h1 class="section-title">Be a guest</h1>
+  <p class="section-desc">Interested in being a guest on the 107 Wins podcast? Fill out the form below and we'll get back to you within a few days.</p>
+
+  <div class="card">
+    <form action="https://formspree.io/f/xldnywyl" method="POST">
+      <input type="hidden" name="_subject" value="107 Wins Guest Request">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Name *</label>
+          <input type="text" id="name" name="name" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="company">Company / organization</label>
+          <input type="text" id="company" name="company/organization" placeholder="Your company">
+        </div>
+        <div class="form-group">
+          <label for="jobTitle">Job title</label>
+          <input type="text" id="jobTitle" name="job title" placeholder="Your role">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="topics">Topics you'd like to discuss *</label>
+        <textarea id="topics" name="topics to discuss" placeholder="What subjects are you passionate about? What unique insights can you share?" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="background">Brief background *</label>
+        <textarea id="background" name="background" placeholder="Tell us about your experience and expertise..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="links">Relevant links</label>
+        <input type="text" id="links" name="relevant links" placeholder="Website, LinkedIn, Twitter, etc.">
+      </div>
+
+      <div class="form-group">
+        <label for="availability">General availability</label>
+        <input type="text" id="availability" name="general availability" placeholder="e.g., Weekday mornings, flexible schedule">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit request &rarr;</button>
+    </form>
+  </div>
+</main>

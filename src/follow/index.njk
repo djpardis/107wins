@@ -1,0 +1,29 @@
+---
+layout: layouts/base.njk
+title: "Follow us — 107 Wins"
+description: "Follow the 107 Wins Pod on YouTube, Instagram, Bluesky, X, Spotify, and Apple Podcasts."
+permalink: /follow/
+---
+
+<main class="container page">
+  <h1 class="section-title">Follow us</h1>
+  <p class="section-desc">Stay connected with the 107 Wins Pod across various platforms.</p>
+  <div class="grid-2">
+    {% for item in social %}
+    <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer" class="social-link">
+      <div class="card">
+        <div class="social-card">
+          <div class="icon-box">{{ item.icon | safe }}</div>
+          <div>
+            <div class="flex-center-gap-sm">
+              <h2 class="font-semibold text-sm">{{ item.name }}</h2>
+              <span class="text-muted external-icon">&#8599;</span>
+            </div>
+            <p class="text-sm text-muted">{{ item.desc }}</p>
+          </div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</main>

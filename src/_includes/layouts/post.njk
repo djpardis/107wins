@@ -1,0 +1,15 @@
+---
+layout: layouts/base.njk
+---
+<main class="container page">
+  <article class="post">
+    {% if page.date %}
+    <p class="text-xs text-muted mb-2"><time datetime="{{ page.date | dateIso }}">{{ page.date | readableDate }}</time></p>
+    {% endif %}
+    <h1 class="section-title">{{ title }}</h1>
+    {% if description %}<p class="section-desc">{{ description }}</p>{% endif %}
+    <div class="post-body mt-6">
+      {{ content | safe }}
+    </div>
+  </article>
+</main>
