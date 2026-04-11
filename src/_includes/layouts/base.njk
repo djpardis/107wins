@@ -23,10 +23,12 @@
 </head>
 <body>
 {% include "partials/header.njk" %}
-<div class="site-main">
+<div class="site-wrap">
+  <div class="site-main">
 {{ content | safe }}
-</div>
+  </div>
 {% include "partials/footer.njk" %}
+</div>
 <script src="/js/nav-toggle.js"></script>
 </body>
 </html>
