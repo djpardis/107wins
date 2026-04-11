@@ -23,7 +23,7 @@ Output is written to `_site/`.
 
 In the repo **Settings → Pages**, set **Source** to **GitHub Actions**. Pushes to `main` run `.github/workflows/pages.yml`, which builds with Eleventy and deploys `_site`.
 
-Custom domain (`CNAME`) is copied from `src/static/` into the build output (set to `futureshock.media`).
+Custom domain (`CNAME`) is copied from `src/static/` into the build output as **`futureshock.media`** (remove any old domain such as `107wins.club` in **Settings → Pages → Custom domain** and in your DNS: point `futureshock.media` at GitHub Pages per [their docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)).
 
 ## Add a post
 

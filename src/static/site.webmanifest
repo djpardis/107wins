@@ -1,6 +1,9 @@
 {
   "name": "Future Shock Media",
   "short_name": "Future Shock",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
   "icons": [
     {
       "src": "/favicon.svg",
@@ -9,7 +12,7 @@
       "purpose": "any"
     }
   ],
-  "theme_color": "#812583",
+  "theme_color": "#952D90",
   "background_color": "#FAF7F0",
   "display": "standalone"
 }
