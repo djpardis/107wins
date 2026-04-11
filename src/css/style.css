@@ -27,27 +27,30 @@
   --font-tagline: "Syne", system-ui, sans-serif;
   /* Nav + buttons (same size) */
   --font-size-ui: 0.9375rem;
-  /* Same top/side inset: floating nav, hero, and .page titles line up */
-  --layout-pad-top: 48px;
   --layout-pad-x: 24px;
-  /* Reserve width for fixed ☰ so headline doesn’t run under it (44px + gap) */
-  --hero-burger-slot: 56px;
+  --layout-max: 960px;
+  /* Shared top inset: fixed ☰ + first line of titles line up */
+  --layout-pad-top: 48px;
+  /* Hit target + icon (aligned with first line of page titles) */
+  --nav-burger-hit: 48px;
+  --nav-burger-icon: 28px;
+  /* Reserve width so hero headline doesn’t run under fixed ☰ */
+  --hero-burger-slot: calc(var(--nav-burger-hit) + 8px);
 }
 
 @media (max-width: 768px) {
   :root {
-    /* Nav + hero share this; extra top = title sits lower on phone */
-    --layout-pad-top: 64px;
+    --layout-pad-top: 48px;
     --layout-pad-x: 20px;
-    --hero-burger-slot: 76px;
+    --hero-burger-slot: calc(var(--nav-burger-hit) + 12px);
   }
 }
 
 @media (max-width: 480px) {
   :root {
-    --layout-pad-top: 60px;
+    --layout-pad-top: 44px;
     --layout-pad-x: 16px;
-    --hero-burger-slot: 80px;
+    --hero-burger-slot: calc(var(--nav-burger-hit) + 12px);
   }
 }
 
@@ -85,11 +88,19 @@ body {
   -webkit-text-size-adjust: 100%;
   min-height: 100vh;
   min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
+  /* Block layout so fixed ☰ is not a flex item (avoids fixed behaving like scroll in some browsers) */
+  display: block;
+  margin: 0;
 }
 
-/* Fills space between header and footer so the footer sits at the bottom on short pages */
+/* Main + footer column; footer pinned to bottom on short pages */
+.site-wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
 .site-main {
   flex: 1 0 auto;
   width: 100%;
@@ -111,7 +122,7 @@ h1, h2, .section-title {
 
 /* === Layout === */
 .container {
-  max-width: 960px;
+  max-width: var(--layout-max);
   margin: 0 auto;
   padding: 0 var(--layout-pad-x);
 }
@@ -127,45 +138,51 @@ h1, h2, .section-title {
 .card-stack { display: flex; flex-direction: column; gap: 20px; }
 .card-list { display: flex; flex-direction: column; gap: 16px; }
 
-/* === Floating nav — same width & top padding as .container / .hero-inner (aligned with page title) === */
+/* === Nav: header is in-flow height 0; ☰ is fixed to the viewport (not a transformed ancestor) === */
 .nav-float {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 999;
+  position: static;
+  height: 0;
+  overflow: visible;
   pointer-events: none;
 }
 
 .nav-float-inner {
-  pointer-events: auto;
-  max-width: 960px;
+  position: relative;
+  height: 0;
+  overflow: visible;
+  max-width: var(--layout-max);
   margin: 0 auto;
-  padding: var(--layout-pad-top) var(--layout-pad-x) 0;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
-  position: relative;
+  padding: 0;
+  pointer-events: none;
 }
 
+/* Button + dropdown: pinned with top/right so it cannot scroll with the page */
 .nav-float-menu {
-  position: relative;
+  position: fixed;
+  top: var(--layout-pad-top);
+  right: calc(max(0px, (100vw - var(--layout-max)) / 2) + var(--layout-pad-x));
+  left: auto;
+  z-index: 999;
+  pointer-events: auto;
+  width: max-content;
 }
 
-/* ☰ White strokes only (no box); slight shadow so lines read on hero too */
+/* ☰ On hero (purple): light strokes; inner pages: ink */
 .nav-float .hamburger {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 44px;
-  min-height: 44px;
+  flex: 0 0 auto;
+  width: var(--nav-burger-hit);
+  height: var(--nav-burger-hit);
+  min-width: var(--nav-burger-hit);
+  min-height: var(--nav-burger-hit);
   padding: 0;
   border: none;
   border-radius: 0;
   cursor: pointer;
   color: #fff;
   background: transparent;
-  filter: drop-shadow(0 1px 2px rgba(42, 31, 46, 0.45));
 }
 
 .nav-float .hamburger:hover {
@@ -178,20 +195,24 @@ h1, h2, .section-title {
   outline-offset: 3px;
 }
 
-.nav-float .hamburger svg {
-  width: 26px;
-  height: 26px;
-}
-
-/* Inner pages (no hero): dark icon so it’s visible on white */
 body:not(:has(.hero--cover)) .nav-float .hamburger {
   color: var(--text);
-  filter: none;
+  box-shadow: none;
 }
 
 body:not(:has(.hero--cover)) .nav-float .hamburger:hover {
   color: var(--purple-deep);
-  background: var(--menu-hover-bg);
+  background: transparent;
+}
+
+body:not(:has(.hero--cover)) .nav-float .hamburger:focus-visible {
+  outline: 2px solid var(--purple-deep);
+  outline-offset: 3px;
+}
+
+.nav-float .hamburger svg {
+  width: var(--nav-burger-icon);
+  height: var(--nav-burger-icon);
 }
 
 /* Same font metrics as menu; outline buttons match menu colors — purple primaries override below */
@@ -276,10 +297,25 @@ body:not(:has(.hero--cover)) .nav-float .hamburger:hover {
   );
 }
 
+/* iPad / tablet / narrow windows: one downward “tooth” (cleaner than multi-point deckle) */
+@media (max-width: 1024px) {
+  .hero--cover::before {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 0%,
+      100% 72%,
+      52% 96%,
+      0 72%,
+      0 0
+    );
+  }
+}
+
 .hero-inner {
   position: relative;
   z-index: 1;
-  max-width: 960px;
+  max-width: var(--layout-max);
   margin: 0 auto;
   padding: var(--layout-pad-top) var(--layout-pad-x) 44px;
   display: flex;
@@ -295,11 +331,17 @@ body:not(:has(.hero--cover)) .nav-float .hamburger:hover {
 .hero-text h1 {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
-  line-height: 0.95;
+  /* Same line box height as ☰ so first line aligns with the nav row */
+  line-height: var(--nav-burger-hit);
   margin-bottom: 14px;
   color: var(--cream-ink);
   text-transform: uppercase;
   letter-spacing: 0.02em;
+}
+
+/* ☰ icon is vertically centered in 48px button; nudge title to match strokes */
+.hero--cover .hero-text h1 {
+  margin-top: 10px;
 }
 
 .hero-brand {
@@ -449,7 +491,14 @@ input[type="button"].btn {
 }
 
 /* === Typography === */
-.section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+/* Line box height matches ☰ (48px) so titles share the same vertical band as the button */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: var(--nav-burger-hit);
+  margin-top: 0;
+  margin-bottom: 8px;
+}
 .section-desc { color: var(--text-muted); margin-bottom: 32px; font-size: 1rem; }
 .text-muted { color: var(--text-muted); }
 .text-sm { font-size: 0.9375rem; }
@@ -647,15 +696,28 @@ textarea.short { min-height: 80px; }
 .footer {
   flex-shrink: 0;
   border-top: 1px solid var(--border);
-  padding: 32px 24px;
+  padding: 12px 0;
   text-align: center;
   color: var(--text-muted);
   font-size: 0.875rem;
-  line-height: 1.7;
   background: var(--bg);
 }
 
-.footer p { margin: 2px 0; }
+/* One column, equal row-gap between all lines (same line-height so boxes don’t fake uneven gaps) */
+.footer-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  row-gap: 6px;
+}
+
+.footer-line,
+.footer-tagline {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  line-height: 1.15;
+}
 
 .footer-tagline {
   font-size: 0.75rem;
@@ -663,7 +725,6 @@ textarea.short { min-height: 80px; }
   letter-spacing: 0.12em;
   color: var(--purple);
   font-weight: 600;
-  margin-top: 8px;
 }
 
 /* === Misc === */
@@ -705,18 +766,6 @@ section.hero + section { padding-top: 24px; }
   .hero--cover {
     min-height: min(60vh, 580px);
   }
-  /* Tablet / mobile: simpler two-tooth edge (desktop keeps default polygon above) */
-  .hero--cover::before {
-    clip-path: polygon(
-      0 0,
-      100% 0,
-      100% 0%,
-      68% 80%,
-      36% 58%,
-      0 100%,
-      0 0
-    );
-  }
   .hero-inner {
     flex-direction: column;
     align-items: stretch;
@@ -736,7 +785,7 @@ section.hero + section { padding-top: 24px; }
   }
   .hero-text h1 {
     font-size: clamp(1.95rem, 6vw, 2.55rem);
-    line-height: 1.12;
+    line-height: var(--nav-burger-hit);
     text-align: left;
   }
   /* h1 > tagline > .btn (~0.9375rem) */
@@ -759,6 +808,9 @@ section.hero + section { padding-top: 24px; }
     min-height: 0;
   }
   .section-indent { padding-left: 0; }
+  .hero--cover .hero-text h1 {
+    margin-top: 4px;
+  }
 }
 
 /* Narrow phones: a bit more hero height + slightly deeper purple at center */
@@ -766,14 +818,15 @@ section.hero + section { padding-top: 24px; }
   .hero--cover {
     min-height: min(64vh, 620px);
   }
+  /* Narrow phones: slightly shallower notch so the tooth doesn’t read too deep */
   .hero--cover::before {
     clip-path: polygon(
       0 0,
       100% 0,
       100% 0%,
-      64% 86%,
-      32% 62%,
-      0 100%,
+      100% 70%,
+      50% 94%,
+      0 70%,
       0 0
     );
   }
@@ -782,7 +835,7 @@ section.hero + section { padding-top: 24px; }
   }
   .hero-text h1 {
     font-size: clamp(2.05rem, 6.5vw, 2.75rem);
-    line-height: 1.1;
+    line-height: var(--nav-burger-hit);
   }
   .hero--cover .hero-tagline {
     font-size: clamp(1.25rem, 4.75vw, 1.6rem);
