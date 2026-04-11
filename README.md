@@ -1,44 +1,22 @@
-# Future Shock Media (futureshock.media)
+# Site
 
-Static site built with [Eleventy](https://www.11ty.dev/). Markdown posts live in `src/content/posts/`; shared layout, nav, and footer are in `src/_includes/`. Episode metadata is `src/_data/episodes.json`.
+[Eleventy](https://www.11ty.dev/) static site. Content under `src/`; data in `src/_data/`.
 
-## Local development
+## Develop
 
 ```bash
 npm install
 npm run serve
 ```
 
-Open the URL shown (usually `http://localhost:8080`).
-
-## Production build
+## Build
 
 ```bash
 npm run build
 ```
 
-Output is written to `_site/`.
+Output: `_site/`.
 
-## GitHub Pages
+## Deploy
 
-In the repo **Settings → Pages**, set **Source** to **GitHub Actions**. Pushes to `main` run `.github/workflows/pages.yml`, which builds with Eleventy and deploys `_site`.
-
-Custom domain (`CNAME`) is copied from `src/static/` into the build output as **`futureshock.media`** (remove any old domain such as `107wins.club` in **Settings → Pages → Custom domain** and in your DNS: point `futureshock.media` at GitHub Pages per [their docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)).
-
-## Add a post
-
-Create a new `.md` file under `src/content/posts/` with front matter:
-
-```yaml
----
-title: "Your title"
-description: "Short summary for listings."
-date: 2026-04-08
----
-```
-
-Body: Markdown. The page URL will be `/posts/your-filename/`.
-
-## Add an episode
-
-Edit `src/_data/episodes.json` (array of episode objects). Cards are rendered with `src/_includes/macros/episode-card.njk`.
+GitHub Actions workflow builds on push to `main`. In **Settings → Pages**, use **GitHub Actions** as the source (not a Jekyll branch build).
