@@ -1,24 +1,15 @@
-<header class="header">
-  <div class="header-inner">
-    <a href="/" class="logo">
-      <div class="logo-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-      </div>
-      <span>107 Wins</span>
-    </a>
-    <nav>
-      {% for item in navigation %}
-      <a href="{{ item.url }}"{% if page.url | navActive(item.url) %} class="active"{% endif %}>{{ item.label }}</a>
-      {% endfor %}
-    </nav>
-    <button class="hamburger" type="button" onclick="toggleMenu()" aria-label="Menu">
-      <svg id="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
-      <svg id="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-  </div>
-  <div class="mobile-nav" id="mobile-nav">
-    {% for item in navigation %}
-    <a href="{{ item.url }}"{% if page.url | navActive(item.url) %} class="active"{% endif %}>{{ item.label }}</a>
-    {% endfor %}
+<header class="nav-float" role="banner">
+  <div class="nav-float-inner">
+    <div class="nav-float-menu">
+      <button class="hamburger" type="button" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav" id="nav-toggle">
+        <svg id="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        <svg id="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        {% for item in navigation %}
+        <a href="{{ item.url }}"{% if page.url | navActive(item.url) %} class="active"{% endif %}>{{ item.label }}</a>
+        {% endfor %}
+      </nav>
+    </div>
   </div>
 </header>
