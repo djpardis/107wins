@@ -27,6 +27,28 @@
   --font-tagline: "Syne", system-ui, sans-serif;
   /* Nav + buttons (same size) */
   --font-size-ui: 0.9375rem;
+  /* Same top/side inset: floating nav, hero, and .page titles line up */
+  --layout-pad-top: 48px;
+  --layout-pad-x: 24px;
+  /* Reserve width for fixed ☰ so headline doesn’t run under it (44px + gap) */
+  --hero-burger-slot: 56px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    /* Nav + hero share this; extra top = title sits lower on phone */
+    --layout-pad-top: 64px;
+    --layout-pad-x: 20px;
+    --hero-burger-slot: 76px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --layout-pad-top: 60px;
+    --layout-pad-x: 16px;
+    --hero-burger-slot: 80px;
+  }
 }
 
 /* === Reset === */
@@ -91,11 +113,11 @@ h1, h2, .section-title {
 .container {
   max-width: 960px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--layout-pad-x);
 }
 
 .page {
-  padding-top: 40px;
+  padding-top: var(--layout-pad-top);
   padding-bottom: 48px;
 }
 
@@ -119,16 +141,11 @@ h1, h2, .section-title {
   pointer-events: auto;
   max-width: 960px;
   margin: 0 auto;
-  padding: 40px 24px 0;
+  padding: var(--layout-pad-top) var(--layout-pad-x) 0;
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
   position: relative;
-}
-
-/* Match hero title row inset (hero .hero-inner uses 48px top) */
-body:has(.hero--cover) .nav-float-inner {
-  padding-top: 48px;
 }
 
 .nav-float-menu {
@@ -239,7 +256,7 @@ body:not(:has(.hero--cover)) .nav-float .hamburger:hover {
   min-height: min(52vh, 520px);
 }
 
-/* Purple field: steep slash + deep saw teeth (restored — not the washed-out fine deckle) */
+/* Purple field: steep slash + saw teeth (desktop keeps full deckle) */
 .hero--cover::before {
   content: "";
   position: absolute;
@@ -264,7 +281,7 @@ body:not(:has(.hero--cover)) .nav-float .hamburger:hover {
   z-index: 1;
   max-width: 960px;
   margin: 0 auto;
-  padding: 48px 24px 44px;
+  padding: var(--layout-pad-top) var(--layout-pad-x) 44px;
   display: flex;
   align-items: flex-start;
   gap: 48px;
@@ -685,20 +702,10 @@ section.hero + section { padding-top: 24px; }
 /* === Responsive: tablet and below === */
 @media (max-width: 768px) {
   .grid-2 { grid-template-columns: 1fr; }
-  .nav-float-inner {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  body:has(.hero--cover) .nav-float-inner {
-    padding-top: 40px;
-  }
   .hero--cover {
     min-height: min(60vh, 580px);
   }
-  /*
-   * Two teeth; tips pushed lower (higher %) so purple sits behind centered title.
-   * Old 40%/24% valley sat too high — title read on cream at mid-viewport.
-   */
+  /* Tablet / mobile: simpler two-tooth edge (desktop keeps default polygon above) */
   .hero--cover::before {
     clip-path: polygon(
       0 0,
@@ -712,28 +719,37 @@ section.hero + section { padding-top: 24px; }
   }
   .hero-inner {
     flex-direction: column;
-    text-align: center;
-    gap: 24px;
-    padding: 40px 20px 36px;
+    align-items: stretch;
+    text-align: left;
+    gap: 20px;
+    padding: var(--layout-pad-top) var(--layout-pad-x) 36px;
   }
   .hero-text {
     max-width: 100%;
     width: 100%;
+    padding-right: var(--hero-burger-slot);
+    box-sizing: border-box;
   }
-  .hero-text p { margin-left: auto; margin-right: auto; }
+  .hero-text p {
+    margin-left: 0;
+    margin-right: 0;
+  }
   .hero-text h1 {
-    font-size: clamp(1.75rem, 6.5vw, 2rem);
-    line-height: 1.02;
+    font-size: clamp(1.95rem, 6vw, 2.55rem);
+    line-height: 1.12;
+    text-align: left;
   }
+  /* h1 > tagline > .btn (~0.9375rem) */
   .hero--cover .hero-tagline {
-    margin-bottom: 36px;
-    font-size: clamp(1rem, 4vw, 1.25rem);
-    max-width: 28rem;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 28px;
+    font-size: clamp(1.1875rem, 4.5vw, 1.5rem);
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
   }
   .btn-group {
-    justify-content: center;
+    justify-content: flex-start;
     gap: 12px;
   }
   .brand-card-inner { flex-direction: column; }
@@ -747,13 +763,6 @@ section.hero + section { padding-top: 24px; }
 
 /* Narrow phones: a bit more hero height + slightly deeper purple at center */
 @media (max-width: 480px) {
-  .nav-float-inner {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-  body:has(.hero--cover) .nav-float-inner {
-    padding-top: 36px;
-  }
   .hero--cover {
     min-height: min(64vh, 620px);
   }
@@ -769,7 +778,14 @@ section.hero + section { padding-top: 24px; }
     );
   }
   .hero-inner {
-    padding: 36px 16px 32px;
+    padding: var(--layout-pad-top) var(--layout-pad-x) 32px;
+  }
+  .hero-text h1 {
+    font-size: clamp(2.05rem, 6.5vw, 2.75rem);
+    line-height: 1.1;
+  }
+  .hero--cover .hero-tagline {
+    font-size: clamp(1.25rem, 4.75vw, 1.6rem);
   }
 }
 
