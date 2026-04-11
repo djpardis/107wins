@@ -1,26 +1,21 @@
 ---
 layout: layouts/base.njk
-title: "107 Wins: Conversations about business, tech, and winning tactics"
-description: "The 107 Wins Pod hosts conversations about business building, tech trends, proven tactics, and learning new things."
-ogTitle: "107 Wins: Conversations about business, tech, and winning tactics"
-ogDescription: "The 107 Wins Pod hosts conversations about business building, tech trends, proven tactics, and learning new things."
+title: "Future Shock Media — Podcast & media network"
+description: "Future Shock Media: boring on purpose. Podcasts and media with a retro-futuristic sensibility—signal without the noise."
+ogTitle: "Future Shock Media"
+ogDescription: "Boring on purpose. Podcasts and media with a retro-futuristic sensibility—signal without the noise."
 ---
 {% import "macros/episode-card.njk" as ep %}
 
-<section class="hero">
-  <div class="hero-bg"></div>
+<section class="hero hero--cover" aria-label="Intro">
   <div class="hero-inner">
     <div class="hero-text">
-      <div class="badge">New podcast</div>
-      <h1>The <span>107 Wins</span> Pod</h1>
-      <p>Conversations about business building, tech trends, proven tactics, and learning new things.</p>
+      <h1><span class="hero-brand">{{ site.title }}</span></h1>
+      <p class="hero-tagline">{{ site.subtitle }}</p>
       <div class="btn-group">
         <a href="/episodes/" class="btn btn-primary" data-testid="link-episodes">Browse episodes &rarr;</a>
         <a href="/guest-request/" class="btn btn-outline" data-testid="link-guest-request">Be a guest</a>
       </div>
-    </div>
-    <div class="hero-logo">
-      <img src="/images/107wins-logo.png" alt="107 Wins Club Logo">
     </div>
   </div>
 </section>
@@ -43,12 +38,12 @@ ogDescription: "The 107 Wins Pod hosts conversations about business building, te
 {% endif %}
 
 <section class="container home-section-flush">
-  <div class="card">
-    <div class="giants-card">
-      <img src="/images/2021giants.jpg" alt="2021 San Francisco Giants team at Oracle Park">
-      <div class="space-y-3">
-        <h2 class="font-bold heading-md">Why "107 wins"?</h2>
-        <p class="text-sm text-muted">The name celebrates the SF Giants' historic 2021 season when they won an incredible 107 regular season games, a franchise record. As dedicated fans who attended way too many games that season, we decided to honor that special year in our podcast name.</p>
+  <div class="card brand-card">
+    <div class="brand-card-inner">
+      <div class="brand-card-deco" aria-hidden="true"></div>
+      <div class="brand-card-text">
+        <h2 class="font-bold heading-md">Why &ldquo;Future Shock&rdquo;?</h2>
+        <p class="text-sm text-muted">Podcast and media for people who want signal without the noise. The name borrows the old idea of future shock &mdash; change moving faster than culture can absorb &mdash; and the work stays measured: clear, a bit retro-futurist, light on hype.</p>
       </div>
     </div>
   </div>

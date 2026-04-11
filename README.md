@@ -1,4 +1,4 @@
-# 107 Wins site
+# Future Shock Media (futureshock.media)
 
 Static site built with [Eleventy](https://www.11ty.dev/). Markdown posts live in `src/content/posts/`; shared layout, nav, and footer are in `src/_includes/`. Episode metadata is `src/_data/episodes.json`.
 
@@ -23,7 +23,7 @@ Output is written to `_site/`.
 
 In the repo **Settings → Pages**, set **Source** to **GitHub Actions**. Pushes to `main` run `.github/workflows/pages.yml`, which builds with Eleventy and deploys `_site`.
 
-Custom domain (`CNAME`) is copied from `src/static/` into the build output.
+Custom domain (`CNAME`) is copied from `src/static/` into the build output (set to `futureshock.media`).
 
 ## Add a post
 

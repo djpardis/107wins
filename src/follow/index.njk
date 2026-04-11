@@ -1,19 +1,20 @@
 ---
 layout: layouts/base.njk
-title: "Follow us — 107 Wins"
-description: "Follow the 107 Wins Pod on YouTube, Instagram, Bluesky, X, Spotify, and Apple Podcasts."
+title: "Follow us — Future Shock Media"
+description: "Follow Future Shock Media on YouTube, Instagram, Bluesky, X, Spotify, and Apple Podcasts."
 permalink: /follow/
 ---
+{% import "macros/social-icon.njk" as socialIcon %}
 
 <main class="container page">
   <h1 class="section-title">Follow us</h1>
-  <p class="section-desc">Stay connected with the 107 Wins Pod across various platforms.</p>
+  <p class="section-desc">Stay connected with Future Shock Media across various platforms.</p>
   <div class="grid-2">
     {% for item in social %}
     <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer" class="social-link">
       <div class="card">
         <div class="social-card">
-          <div class="icon-box">{{ item.icon | safe }}</div>
+          <div class="icon-box icon-box--social" aria-hidden="true">{{ socialIcon.icon(item.id) }}</div>
           <div>
             <div class="flex-center-gap-sm">
               <h2 class="font-semibold text-sm">{{ item.name }}</h2>

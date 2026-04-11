@@ -1,14 +1,14 @@
 ---
 layout: layouts/base.njk
-title: "Episodes — 107 Wins"
-description: "Browse all episodes of the 107 Wins Pod. Conversations about business building, tech trends, and proven tactics."
+title: "Episodes — Future Shock Media"
+description: "Browse all episodes from Future Shock Media. Conversations about business building, tech trends, and proven tactics."
 permalink: /episodes/
 ---
 {% import "macros/episode-card.njk" as ep %}
 
 <main class="container page">
   <h1 class="section-title">All episodes</h1>
-  <p class="section-desc">Browse all episodes of the 107 Wins Pod.</p>
+  <p class="section-desc">Browse all episodes from Future Shock Media.</p>
   {% set sortedEpisodes = episodes | sortEpisodesDesc %}
   {% if sortedEpisodes.length %}
   <div class="card-list">
