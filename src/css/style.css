@@ -195,7 +195,7 @@ body:not(:has(.hero--cover)) .nav-float .hamburger:hover {
   left: auto;
   z-index: 1000;
   flex-direction: column;
-  gap: 0;
+  gap: 4px;
   min-width: 200px;
   max-width: min(280px, calc(100vw - 48px));
   width: max-content;
@@ -325,13 +325,12 @@ body:not(:has(.hero--cover)) .nav-float .hamburger:hover {
 .hero--cover .btn-outline {
   background: var(--surface);
   color: var(--text-muted);
-  border: 2px solid var(--border);
+  border: none;
 }
 
 .hero--cover .btn-outline:hover {
   background: var(--menu-hover-bg);
   color: var(--text);
-  border-color: var(--menu-hover-bg);
 }
 
 /* === Buttons === */
@@ -388,11 +387,10 @@ input[type="button"].btn {
   border: 1px solid var(--surface);
   border-radius: 0;
   padding: 20px;
-  transition: box-shadow .15s, transform .15s;
+  transition: transform .15s;
 }
 
-.card:hover { box-shadow: 0 4px 16px rgba(42, 31, 46, 0.06); }
-.card-hover:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(42, 31, 46, 0.08); }
+.card-hover:hover { transform: translateY(-2px); }
 
 /* === Shared flex patterns === */
 .flex-center { display: flex; align-items: center; }
@@ -547,13 +545,13 @@ input[type="email"],
 textarea {
   width: 100%;
   padding: 12px 14px;
-  border: 1px solid var(--surface);
+  border: none;
   border-radius: 0;
   font-size: 16px;
   font-family: inherit;
-  background: var(--surface);
+  background: var(--menu-hover-bg);
   color: var(--text);
-  transition: box-shadow .15s;
+  transition: box-shadow 0.15s;
   -webkit-appearance: none;
   appearance: none;
 }
@@ -561,8 +559,12 @@ textarea {
 input:focus,
 textarea:focus {
   outline: none;
-  border-color: var(--surface);
-  box-shadow: none;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }
 
 textarea { resize: vertical; min-height: 100px; }
