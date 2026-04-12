@@ -846,16 +846,29 @@ textarea.short { min-height: 80px; }
 section.home-section-flush:has(+ section .home-brand-stack) {
   padding-bottom: 20px;
 }
+/*
+ * Teeth sit inside the hero, so the visible gap tooth→card reads larger than padding alone.
+ * Use a smaller top edge than bottom on tablet/desktop so it matches the band above the footer.
+ * Narrow phones (≤480px): equal top/bottom edges.
+ */
 section.home-section-flush:has(.home-brand-stack) {
   position: relative;
   z-index: 2;
-  margin-top: -56px;
-}
-section.hero + section.home-section-flush:has(.home-brand-stack) {
-  padding-top: 0;
+  --home-brand-edge-top: 36px;
+  --home-brand-edge-bottom: 64px;
+  --home-brand-overlap: 56px;
+  padding-top: var(--home-brand-edge-top);
+  padding-bottom: var(--home-brand-edge-bottom);
+  margin-top: calc(-1 * (var(--home-brand-overlap) + var(--home-brand-edge-top)));
 }
 
 section.hero + section { padding-top: 24px; }
+
+/* First section after hero: match top edge (overrides 24px above) */
+section.hero + section.home-section-flush:has(.home-brand-stack) {
+  padding-top: var(--home-brand-edge-top);
+}
+
 .clickable { cursor: pointer; }
 
 /* === Responsive: tablet and below === */
@@ -903,9 +916,8 @@ section.hero + section { padding-top: 24px; }
   .hero--cover .hero-text h1.hero-title-stack {
     margin-top: 4px;
   }
-  /* Less overlap into hero on small screens — panels sit more like normal stacked cards */
   section.home-section-flush:has(.home-brand-stack) {
-    margin-top: -28px;
+    --home-brand-overlap: 40px;
   }
 }
 
@@ -914,7 +926,7 @@ section.hero + section { padding-top: 24px; }
   .form-row { grid-template-columns: 1fr; }
   .cta-row { flex-direction: column; align-items: start; }
   section.home-section-flush:has(.home-brand-stack) {
-    margin-top: -20px;
+    --home-brand-overlap: 32px;
   }
   .card {
     padding: 17px;
@@ -954,11 +966,11 @@ section.hero + section { padding-top: 24px; }
     clip-path: polygon(
       0 0,
       100% 0,
-      100% 64%,
-      72% 86%,
-      50% 72%,
-      28% 86%,
-      0 68%,
+      100% 54%,
+      72% 76%,
+      50% 62%,
+      28% 76%,
+      0 58%,
       0 0
     );
   }
@@ -974,13 +986,17 @@ section.hero + section { padding-top: 24px; }
     font-size: clamp(1.25rem, 4.75vw, 1.6rem);
   }
   section.home-section-flush:has(.home-brand-stack) {
-    margin-top: -12px;
+    --home-brand-edge-top: 48px;
+    --home-brand-edge-bottom: 48px;
+    /* Pull up with higher teeth (narrow-phone clip-path) */
+    --home-brand-overlap: 44px;
+  }
+  /* Nudge the two cards up (not the section band) */
+  section.home-section-flush:has(.home-brand-stack) .home-brand-stack {
+    transform: translateY(-12px);
   }
   .card {
     padding: 16px;
-  }
-  .home-section-flush:has(.home-brand-stack) {
-    padding-bottom: 48px;
   }
 }
 
