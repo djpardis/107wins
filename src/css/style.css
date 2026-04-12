@@ -116,7 +116,7 @@ a:hover {
 }
 img { max-width: 100%; height: auto; }
 
-h1, h2, .section-title {
+h1, h2 {
   font-family: var(--font-display);
 }
 
@@ -329,25 +329,30 @@ body:not(:has(.hero--cover)) .nav-float .hamburger:focus-visible {
   max-width: 36rem;
 }
 
-.hero-text h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 800;
-  /* Same line box height as ☰ so first line aligns with the nav row */
-  line-height: var(--nav-burger-hit);
+/* Hero site name: one word per line, large Orbitron */
+.hero-text h1.hero-title-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   margin-bottom: 14px;
-  color: var(--cream-ink);
+  margin-top: 10px;
   text-transform: uppercase;
+  color: var(--cream-ink);
   letter-spacing: 0.02em;
 }
 
-/* ☰ icon is vertically centered in 48px button; nudge title to match strokes */
-.hero--cover .hero-text h1 {
+.hero--cover .hero-text h1.hero-title-stack {
   margin-top: 10px;
 }
 
-.hero-brand {
-  color: inherit;
+.hero-brand-line {
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-weight: 800;
+  /* Smaller on wide screens; clamp min keeps phones readable (~1.72rem floor) */
+  font-size: clamp(1.72rem, 4.75vw, 2.75rem);
+  line-height: 1.02;
   letter-spacing: 0.03em;
+  display: block;
 }
 
 .hero-tagline {
@@ -452,6 +457,36 @@ input[type="button"].btn {
 
 .card-hover:hover { transform: translateY(-2px); }
 
+/* Blog: pinned post — pin inline with title row, RHS */
+.card-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.card-title-row__headline {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+.card-pin {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: 0.12em;
+  color: var(--purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.card-pin svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  overflow: visible;
+}
+
 /* === Shared flex patterns === */
 .flex-center { display: flex; align-items: center; }
 .flex-center-gap { display: flex; align-items: center; gap: 12px; }
@@ -492,8 +527,9 @@ input[type="button"].btn {
 }
 
 /* === Typography === */
-/* Line box height matches ☰ (48px) so titles share the same vertical band as the button */
+/* Line box height matches ☰ (48px); same Syne stack as hero tagline (“Boring on purpose”) */
 .section-title {
+  font-family: var(--font-tagline);
   font-size: 1.5rem;
   font-weight: 700;
   line-height: var(--nav-burger-hit);
@@ -845,10 +881,9 @@ section.hero + section { padding-top: 24px; }
     margin-left: 0;
     margin-right: 0;
   }
-  .hero-text h1 {
-    font-size: clamp(1.95rem, 6vw, 2.55rem);
-    line-height: var(--nav-burger-hit);
-    text-align: left;
+  .hero-brand-line {
+    font-size: clamp(1.65rem, calc(5.5vw + 0.85rem), 2.35rem);
+    line-height: 1.02;
   }
   /* h1 > tagline > .btn (~0.9375rem) */
   .hero--cover .hero-tagline {
@@ -865,7 +900,7 @@ section.hero + section { padding-top: 24px; }
   }
   .brand-card-inner { flex-direction: column; }
   .section-indent { padding-left: 0; }
-  .hero--cover .hero-text h1 {
+  .hero--cover .hero-text h1.hero-title-stack {
     margin-top: 4px;
   }
   /* Less overlap into hero on small screens — panels sit more like normal stacked cards */
@@ -930,9 +965,10 @@ section.hero + section { padding-top: 24px; }
   .hero-inner {
     padding: var(--layout-pad-top) var(--layout-pad-x) 32px;
   }
-  .hero-text h1 {
-    font-size: clamp(2.05rem, 6.5vw, 2.75rem);
-    line-height: var(--nav-burger-hit);
+  .hero-brand-line {
+    /* Slightly higher floor on narrow phones so lines don’t read tiny */
+    font-size: clamp(1.68rem, calc(7vw + 0.5rem), 2.42rem);
+    line-height: 1.02;
   }
   .hero--cover .hero-tagline {
     font-size: clamp(1.25rem, 4.75vw, 1.6rem);
@@ -949,6 +985,37 @@ section.hero + section { padding-top: 24px; }
 }
 
 /* === Markdown posts (Eleventy) === */
+/* Same vertical band as fixed ☰ (48px): line box aligns with burger row */
+.post-back {
+  display: flex;
+  align-items: center;
+  min-height: var(--nav-burger-hit);
+  margin: 0 0 8px;
+}
+
+/* Internal “back” / nav links: brand purple, no hover color shift (use on any similar control) */
+.link-back,
+.post-back-link {
+  font-family: var(--font-body);
+  font-size: var(--font-size-ui);
+  font-weight: 500;
+  line-height: var(--nav-burger-hit);
+  color: var(--purple);
+  text-decoration: none;
+}
+.link-back:hover,
+.post-back-link:hover {
+  color: var(--purple);
+  text-decoration: none;
+}
+.link-back:focus-visible,
+.post-back-link:focus-visible {
+  color: var(--purple);
+  text-decoration: none;
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
 .post-body { color: var(--text); line-height: 1.65; }
 .post-body p { margin-bottom: 1rem; }
 .post-body h2 { font-size: 1.25rem; font-weight: 700; margin: 1.5rem 0 0.5rem; font-family: var(--font-display); }

@@ -10,7 +10,7 @@ ogDescription: "Boring on purpose. Podcasts and media with a retro-futuristic se
 <section class="hero hero--cover" aria-label="Intro">
   <div class="hero-inner">
     <div class="hero-text">
-      <h1><span class="hero-brand">{{ site.title }}</span></h1>
+      <h1 class="hero-title-stack">{% for word in site.title.split(' ') %}<span class="hero-brand-line">{{ word }}</span>{% endfor %}</h1>
       <p class="hero-tagline">{{ site.subtitle }}</p>
     </div>
   </div>

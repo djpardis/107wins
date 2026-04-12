@@ -1,9 +1,9 @@
 [
   { "label": "Home", "url": "/" },
   { "label": "Episodes", "url": "/episodes/" },
+  { "label": "Blog", "url": "/posts/" },
   { "label": "Hosts", "url": "/hosts/" },
   { "label": "Be a guest", "url": "/guest-request/" },
   { "label": "Guest guide", "url": "/guest-guide/" },
-  { "label": "Follow us", "url": "/follow/" },
-  { "label": "Posts", "url": "/posts/" }
+  { "label": "Follow us", "url": "/follow/" }
 ]

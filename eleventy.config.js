@@ -21,6 +21,15 @@ export default function (eleventyConfig) {
     return [...posts].sort((a, b) => (b.date || 0) - (a.date || 0));
   });
 
+  /** Pinned posts first (e.g. welcome), then everyone else, newest first within each group */
+  eleventyConfig.addFilter("sortPostsPinnedFirst", (posts) => {
+    if (!Array.isArray(posts)) return [];
+    const byDateDesc = (a, b) => (b.date || 0) - (a.date || 0);
+    const pinned = posts.filter((p) => p.data?.pinned === true).sort(byDateDesc);
+    const rest = posts.filter((p) => !p.data?.pinned).sort(byDateDesc);
+    return [...pinned, ...rest];
+  });
+
   eleventyConfig.addFilter("readableDate", (dateObj) => {
     if (!dateObj) return "";
     const d = dateObj instanceof Date ? dateObj : new Date(dateObj);
