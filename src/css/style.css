@@ -272,12 +272,13 @@ body:not(:has(.hero--cover)) .nav-float .hamburger:focus-visible {
 /* === Hero — Future Shock (1970) cover: flat purple / cream, sharp diagonal === */
 .hero--cover {
   position: relative;
+  z-index: 0;
   overflow: hidden;
   background: var(--cover-cream);
   min-height: min(52vh, 520px);
 }
 
-/* Purple field: steep slash + saw teeth (desktop keeps full deckle) */
+/* Purple field: bottom edge = two teeth (valley — peak — valley) */
 .hero--cover::before {
   content: "";
   position: absolute;
@@ -287,26 +288,26 @@ body:not(:has(.hero--cover)) .nav-float .hamburger:focus-visible {
   clip-path: polygon(
     0 0,
     100% 0,
-    100% 0%,
-    82% 64%,
-    66% 34%,
-    48% 97%,
-    28% 76%,
-    0 100%,
+    100% 52%,
+    72% 80%,
+    50% 58%,
+    28% 80%,
+    0 62%,
     0 0
   );
 }
 
-/* iPad / tablet / narrow windows: one downward “tooth” (cleaner than multi-point deckle) */
+/* Tablet / narrow desktop: same two-tooth silhouette, slightly softer */
 @media (max-width: 1024px) {
   .hero--cover::before {
     clip-path: polygon(
       0 0,
       100% 0,
-      100% 0%,
-      100% 72%,
-      52% 96%,
-      0 72%,
+      100% 54%,
+      71% 78%,
+      50% 60%,
+      29% 78%,
+      0 63%,
       0 0
     );
   }
@@ -443,7 +444,7 @@ input[type="button"].btn {
 /* === Cards === */
 .card {
   background: var(--surface);
-  border: 1px solid var(--surface);
+  border: none;
   border-radius: 0;
   padding: 20px;
   transition: transform .15s;
@@ -578,25 +579,11 @@ input[type="button"].btn {
 .feature-row { display: flex; align-items: start; gap: 12px; }
 .feature-content { flex: 1; min-width: 0; }
 
-/* === Brand / about card (replaces giants card) === */
+/* === Brand / about card — same cream as .card everywhere === */
 .brand-card-inner {
   display: flex;
   align-items: stretch;
   gap: 24px;
-}
-
-.brand-card-deco {
-  width: 8px;
-  min-height: 100px;
-  border-radius: 0;
-  flex-shrink: 0;
-  background: linear-gradient(
-    180deg,
-    var(--purple) 0%,
-    var(--teal) 45%,
-    var(--peach) 100%
-  );
-  box-shadow: inset 0 0 0 1px rgba(42, 31, 46, 0.08);
 }
 
 .brand-card-text { flex: 1; min-width: 0; }
@@ -605,6 +592,18 @@ input[type="button"].btn {
 .form-group { margin-bottom: 16px; }
 .form-group label { display: block; font-size: 0.9375rem; font-weight: 500; margin-bottom: 6px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.subscribe-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 8px;
+  margin-top: 16px;
+}
+.subscribe-form input[type="email"] {
+  flex: 1 1 180px;
+  min-width: 0;
+}
 
 input[type="text"],
 input[type="email"],
@@ -799,6 +798,27 @@ textarea.short { min-height: 80px; }
 .section-indent { padding-left: 52px; }
 .link-list { display: flex; gap: 6px; flex-wrap: wrap; }
 .home-section-flush { padding-bottom: 64px; }
+
+/* Tight stack: subscribe CTA + Why Future Shock (single section, small gap) */
+.home-brand-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Pull subscribe + brand block higher on the home page; paint above hero so titles stay visible */
+section.home-section-flush:has(+ section .home-brand-stack) {
+  padding-bottom: 20px;
+}
+section.home-section-flush:has(.home-brand-stack) {
+  position: relative;
+  z-index: 2;
+  margin-top: -56px;
+}
+section.hero + section.home-section-flush:has(.home-brand-stack) {
+  padding-top: 0;
+}
+
 section.hero + section { padding-top: 24px; }
 .clickable { cursor: pointer; }
 
@@ -844,31 +864,66 @@ section.hero + section { padding-top: 24px; }
     gap: 12px;
   }
   .brand-card-inner { flex-direction: column; }
-  .brand-card-deco {
-    width: 100%;
-    height: 6px;
-    min-height: 0;
-  }
   .section-indent { padding-left: 0; }
   .hero--cover .hero-text h1 {
     margin-top: 4px;
   }
+  /* Less overlap into hero on small screens — panels sit more like normal stacked cards */
+  section.home-section-flush:has(.home-brand-stack) {
+    margin-top: -28px;
+  }
 }
 
-/* Narrow phones: a bit more hero height + slightly deeper purple at center */
+/* === Responsive: phone & small tablet (≤640px) === */
+@media (max-width: 640px) {
+  .form-row { grid-template-columns: 1fr; }
+  .cta-row { flex-direction: column; align-items: start; }
+  section.home-section-flush:has(.home-brand-stack) {
+    margin-top: -20px;
+  }
+  .card {
+    padding: 17px;
+  }
+  .home-brand-stack {
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+  }
+  .brand-card-text .heading-md {
+    font-size: clamp(1.05rem, 4.2vw, 1.25rem);
+    line-height: 1.25;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  .subscribe-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .subscribe-form .btn-primary {
+    width: 100%;
+  }
+  .subscribe-form input[type="email"] {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+/* Narrow phones: hero + slightly tighter home cards (must follow 640px so it wins) */
 @media (max-width: 480px) {
   .hero--cover {
     min-height: min(64vh, 620px);
   }
-  /* Narrow phones: slightly shallower notch so the tooth doesn’t read too deep */
   .hero--cover::before {
     clip-path: polygon(
       0 0,
       100% 0,
-      100% 0%,
-      100% 70%,
-      50% 94%,
-      0 70%,
+      100% 64%,
+      72% 86%,
+      50% 72%,
+      28% 86%,
+      0 68%,
       0 0
     );
   }
@@ -882,12 +937,15 @@ section.hero + section { padding-top: 24px; }
   .hero--cover .hero-tagline {
     font-size: clamp(1.25rem, 4.75vw, 1.6rem);
   }
-}
-
-/* === Responsive: phone === */
-@media (max-width: 640px) {
-  .form-row { grid-template-columns: 1fr; }
-  .cta-row { flex-direction: column; align-items: start; }
+  section.home-section-flush:has(.home-brand-stack) {
+    margin-top: -12px;
+  }
+  .card {
+    padding: 16px;
+  }
+  .home-section-flush:has(.home-brand-stack) {
+    padding-bottom: 48px;
+  }
 }
 
 /* === Markdown posts (Eleventy) === */
