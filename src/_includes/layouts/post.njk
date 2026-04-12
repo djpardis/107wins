@@ -2,6 +2,9 @@
 layout: layouts/base.njk
 ---
 <main class="container page">
+  <nav class="post-back" aria-label="Blog">
+    <a href="/posts/" class="post-back-link link-back">&larr; Back to blog</a>
+  </nav>
   <article class="post">
     {% if page.date %}
     <p class="text-xs text-muted mb-2"><time datetime="{{ page.date | dateIso }}">{{ page.date | readableDate }}</time></p>
