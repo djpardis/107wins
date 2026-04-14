@@ -17,9 +17,10 @@
   --menu-hover-bg: color-mix(in srgb, var(--purple) 16%, var(--surface));
   --teal: #4f8594;
   --peach: #c49a7a;
+  --vlc-orange: #e67e00;
   /* Home subscribe CTA — sci‑fi burnt orange, white label */
-  --subscribe-orange: #c75b18;
-  --subscribe-orange-hover: #a84a14;
+  --subscribe-orange: var(--vlc-orange);
+  --subscribe-orange-hover: color-mix(in srgb, var(--vlc-orange) 78%, #000);
   --link: #8a2a85;
   --link-hover: #752573;
   --focus: rgba(149, 45, 144, 0.3);

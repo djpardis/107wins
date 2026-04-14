@@ -1,14 +1,14 @@
 ---
 layout: layouts/base.njk
 title: "Videos — Future Shock Media"
-description: "Browse all videos from Future Shock Media. Conversations about business building, tech trends, and proven tactics."
+description: "The full archive of conversations."
 permalink: /episodes/
 ---
 {% import "macros/episode-card.njk" as ep %}
 
 <main class="container page">
   <h1 class="section-title">Videos</h1>
-  <p class="section-desc">Browse all videos from Future Shock Media.</p>
+  <p class="section-desc">The full archive of conversations.</p>
   {% set sortedEpisodes = episodes | sortEpisodesDesc %}
   {% if sortedEpisodes.length %}
   <div class="card-list">
