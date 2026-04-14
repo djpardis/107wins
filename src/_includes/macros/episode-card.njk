@@ -8,8 +8,8 @@
         <span class="text-xs text-muted">{{ ep.duration }}</span>
         {% if showDate and ep.publishedAt %}<span class="text-xs text-muted">{{ ep.publishedAt }}</span>{% endif %}
       </div>
-      <h3 class="font-semibold mt-2">{{ ep.title }}</h3>
-      <p class="text-sm text-muted mt-2{% if truncateDesc %} line-clamp-2{% endif %}">{{ ep.description }}</p>
+      <h3 class="font-semibold heading-card mt-2">{{ ep.title }}</h3>
+      <p class="text-muted mt-2{% if truncateDesc %} line-clamp-2{% endif %}">{{ ep.description }}</p>
       {% if ep.guestName %}
       <p class="text-xs text-muted mt-2">with <strong>{{ ep.guestName }}</strong>{% if ep.guestTitle %}, {{ ep.guestTitle }}{% endif %}</p>
       {% endif %}

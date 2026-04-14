@@ -1,11 +1,11 @@
 ---
 layout: layouts/base.njk
 ---
-<main class="container page">
+<main class="container page page--post">
   <nav class="post-back" aria-label="Articles">
     <a href="/posts/" class="post-back-link link-back">&larr; Back to articles</a>
   </nav>
-  <article class="post">
+  <article class="card post">
     {% if page.date %}
     <p class="text-xs text-muted mb-2"><time datetime="{{ page.date | dateIso }}">{{ page.date | readableDate }}</time></p>
     {% endif %}

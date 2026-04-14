@@ -18,7 +18,7 @@
   --teal: #4f8594;
   --peach: #c49a7a;
   --vlc-orange: #e67e00;
-  /* Home subscribe CTA — sci‑fi burnt orange, white label */
+  /* Primary buttons site-wide (same orange, white label) */
   --subscribe-orange: var(--vlc-orange);
   --subscribe-orange-hover: color-mix(in srgb, var(--vlc-orange) 78%, #000);
   --link: #8a2a85;
@@ -29,17 +29,39 @@
   --font-display: "Syne", system-ui, sans-serif;
   --font-body: "DM Sans", system-ui, sans-serif;
   --font-tagline: "Syne", system-ui, sans-serif;
-  /* Nav + buttons (same size) */
-  --font-size-ui: 0.9375rem;
+  /* Type scale — body + UI (single source; use these, not raw rem) */
+  --font-size-body-text: 1.0625rem;
+  --font-size-sm: 0.9375rem;
+  --font-size-xs: 0.8125rem;
+  --font-size-heading-md: 1.25rem;
+  --font-size-heading-card: 1.1rem;
+  --font-size-page-title: 1.5rem;
+  --font-size-post-h3: 1.05rem;
+  --font-size-btn-sm: 0.875rem;
+  /* Alias for older mental model (“UI copy”) */
+  --font-size-ui: var(--font-size-sm);
+  --line-height-body: 1.6;
+  --line-height-prose: 1.65;
+  --line-height-snug: 1.25;
+  --line-height-heading: 1.3;
+  /* Multi-line fields: slightly tighter than body copy */
+  --line-height-textarea: 1.45;
+  /* Inputs + default buttons + nav hamburger + menu rows */
+  --control-height: 48px;
+  /* One hit height for ☰ / burger slot math (alias — do not duplicate px here) */
+  --nav-burger-hit: var(--control-height);
   --layout-pad-x: 24px;
   --layout-max: 960px;
   /* Shared top inset: fixed ☰ + first line of titles line up */
   --layout-pad-top: 48px;
-  /* Hit target + icon (aligned with first line of page titles) */
-  --nav-burger-hit: 48px;
+  /* Burger icon (inside --nav-burger-hit square) */
   --nav-burger-icon: 28px;
+  /* Dropdown: inset from viewport edge (matches control rhythm) */
+  --site-nav-edge: var(--control-height);
   /* Reserve width so hero headline doesn’t run under fixed ☰ */
   --hero-burger-slot: calc(var(--nav-burger-hit) + 8px);
+  /* Card inner padding — shared with post “Back” row so text lines up */
+  --card-pad: 20px;
 }
 
 @media (max-width: 768px) {
@@ -50,11 +72,18 @@
   }
 }
 
+@media (max-width: 640px) {
+  :root {
+    --card-pad: 17px;
+  }
+}
+
 @media (max-width: 480px) {
   :root {
     --layout-pad-top: 44px;
     --layout-pad-x: 16px;
     --hero-burger-slot: calc(var(--nav-burger-hit) + 12px);
+    --card-pad: 16px;
   }
 }
 
@@ -87,8 +116,8 @@ body {
   font-family: var(--font-body);
   color: var(--text);
   background: var(--bg);
-  line-height: 1.6;
-  font-size: 1rem;
+  line-height: var(--line-height-body);
+  font-size: var(--font-size-body-text);
   -webkit-text-size-adjust: 100%;
   min-height: 100vh;
   min-height: 100dvh;
@@ -133,7 +162,7 @@ h1, h2 {
 
 .page {
   padding-top: var(--layout-pad-top);
-  padding-bottom: 48px;
+  padding-bottom: 24px;
 }
 
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; align-items: stretch; }
@@ -190,13 +219,13 @@ h1, h2 {
 }
 
 .nav-float .hamburger:hover {
-  color: rgba(255, 255, 255, 0.88);
-  background: transparent;
+  color: rgba(255, 255, 255, 0.92);
+  background: color-mix(in srgb, var(--cream-ink) 14%, transparent);
 }
 
 .nav-float .hamburger:focus-visible {
   outline: 2px solid var(--cream-ink);
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
 
 body:not(:has(.hero--cover)) .nav-float .hamburger {
@@ -206,12 +235,12 @@ body:not(:has(.hero--cover)) .nav-float .hamburger {
 
 body:not(:has(.hero--cover)) .nav-float .hamburger:hover {
   color: var(--purple-deep);
-  background: transparent;
+  background: var(--menu-hover-bg);
 }
 
 body:not(:has(.hero--cover)) .nav-float .hamburger:focus-visible {
-  outline: 2px solid var(--purple-deep);
-  outline-offset: 3px;
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }
 
 .nav-float .hamburger svg {
@@ -219,16 +248,7 @@ body:not(:has(.hero--cover)) .nav-float .hamburger:focus-visible {
   height: var(--nav-burger-icon);
 }
 
-/* Same font metrics as menu; outline buttons match menu colors — purple primaries override below */
-.site-nav a,
-.btn {
-  font-family: var(--font-body);
-  font-size: var(--font-size-ui);
-  font-weight: 500;
-  line-height: 1.6;
-  transition: background 0.15s, box-shadow 0.15s, color 0.15s, border-color 0.15s;
-}
-
+/* Dropdown: same row height + type rhythm as .btn / inputs (tokens only — no duplicate px) */
 .site-nav {
   display: none;
   position: absolute;
@@ -237,23 +257,32 @@ body:not(:has(.hero--cover)) .nav-float .hamburger:focus-visible {
   left: auto;
   z-index: 1000;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   min-width: 200px;
-  max-width: min(280px, calc(100vw - 48px));
+  max-width: min(280px, calc(100vw - var(--site-nav-edge)));
   width: max-content;
-  padding: 6px;
+  padding: 4px;
   border: 1px solid var(--border);
   border-radius: 0;
-  background: rgba(250, 247, 240, 0.98);
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 28px rgba(42, 31, 46, 0.12);
 }
 
 .site-nav a {
-  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  min-height: var(--control-height);
+  padding: 0 14px;
   border-radius: 0;
+  box-sizing: border-box;
   text-decoration: none;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-text);
+  font-weight: 500;
+  line-height: var(--line-height-snug);
   color: var(--text-muted);
+  transition: background 0.15s, color 0.15s;
 }
 
 .site-nav a:hover,
@@ -262,6 +291,11 @@ body:not(:has(.hero--cover)) .nav-float .hamburger:focus-visible {
   background: var(--menu-hover-bg);
   color: var(--text);
   text-decoration: none;
+}
+
+.site-nav a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }
 
 .site-nav a.active {
@@ -375,19 +409,7 @@ body:not(:has(.hero--cover)) .nav-float .hamburger:focus-visible {
   margin-bottom: 44px;
 }
 
-/* Hero: outline = menu-style; primary = light text on purple, deeper purple hover (not menu-style) */
-.hero--cover .btn-primary {
-  background: var(--purple);
-  box-shadow: none;
-  color: var(--cream-ink);
-  border: 2px solid var(--cream-ink);
-}
-
-.hero--cover .btn-primary:hover {
-  background: var(--purple-deep);
-  color: var(--cream-ink);
-  border-color: var(--purple-deep);
-}
+/* Hero primary uses same .btn-primary orange as the rest of the site */
 
 .hero--cover .btn-outline {
   background: var(--surface);
@@ -404,12 +426,20 @@ body:not(:has(.hero--cover)) .nav-float .hamburger:focus-visible {
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 10px 20px;
+  min-height: var(--control-height);
+  padding: 0 20px;
   border-radius: 0;
   cursor: pointer;
   border: none;
   text-decoration: none;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-text);
+  font-weight: 500;
+  line-height: var(--line-height-snug);
+  box-sizing: border-box;
+  transition: background 0.15s, box-shadow 0.15s, color 0.15s, border-color 0.15s;
 }
 
 /* Beat global a:hover { text-decoration: underline } */
@@ -424,25 +454,14 @@ input[type="button"].btn {
   font-family: var(--font-body);
 }
 
+/* Primary CTAs — one orange everywhere (tokens: --subscribe-orange / --subscribe-orange-hover) */
 .btn-primary {
-  background: linear-gradient(180deg, var(--purple) 0%, var(--purple-deep) 100%);
-  color: var(--cream-ink);
-  box-shadow: 0 2px 10px rgba(149, 45, 144, 0.28);
-}
-.btn-primary:hover {
-  background: var(--purple-deep);
-  color: var(--cream-ink);
-  box-shadow: 0 2px 10px rgba(149, 45, 144, 0.22);
-}
-
-/* Home subscribe card only (partial used on index) — flat fill, minimal banding */
-.subscribe-form .btn-primary {
   background: var(--subscribe-orange);
   color: #fff;
   border: none;
   box-shadow: 0 2px 8px rgba(167, 74, 20, 0.22);
 }
-.subscribe-form .btn-primary:hover {
+.btn-primary:hover {
   background: var(--subscribe-orange-hover);
   color: #fff;
   box-shadow: 0 2px 10px rgba(167, 74, 20, 0.28);
@@ -457,8 +476,11 @@ input[type="button"].btn {
   border-color: var(--menu-hover-bg);
 }
 .btn.btn-sm {
+  min-height: auto;
+  height: auto;
   padding: 6px 14px;
-  font-size: 0.875rem;
+  font-size: var(--font-size-btn-sm);
+  line-height: 1.4;
 }
 .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
 
@@ -467,8 +489,18 @@ input[type="button"].btn {
   background: var(--surface);
   border: none;
   border-radius: 0;
-  padding: 20px;
+  padding: var(--card-pad);
   transition: transform .15s;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-text);
+  line-height: var(--line-height-body);
+  color: var(--text);
+}
+
+/* Kill accidental “small” utility inside cards — reading copy = global body size */
+.card .text-sm {
+  font-size: var(--font-size-body-text);
+  line-height: var(--line-height-body);
 }
 
 .card-hover:hover { transform: translateY(-2px); }
@@ -501,6 +533,36 @@ input[type="button"].btn {
   width: 22px;
   height: 22px;
   overflow: visible;
+}
+
+/* Articles index: full-card link + hover (matches episode cards) */
+.card--article {
+  padding: 0;
+}
+
+.card--article.card--pinned {
+  box-shadow: inset 3px 0 0 var(--purple);
+}
+
+.card-article-link {
+  display: block;
+  padding: var(--card-pad);
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-article-link:hover {
+  text-decoration: none;
+}
+
+.card-article-link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.card--article:hover .card-article-link .heading-card,
+.card-article-link:hover .heading-card {
+  color: var(--purple);
 }
 
 /* === Shared flex patterns === */
@@ -542,25 +604,49 @@ input[type="button"].btn {
   font-size: 20px;
 }
 
-/* === Typography === */
+/* === Typography (sizes + line heights: see :root --font-size-* and --line-height-*) === */
 /* Line box height matches ☰ (48px); same Syne stack as hero tagline (“Boring on purpose”) */
 .section-title {
   font-family: var(--font-tagline);
-  font-size: 1.5rem;
+  font-size: var(--font-size-page-title);
   font-weight: 700;
   line-height: var(--nav-burger-hit);
   margin-top: 0;
   margin-bottom: 8px;
 }
-.section-desc { color: var(--text-muted); margin-bottom: 32px; font-size: 1rem; }
+.section-desc {
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  font-size: var(--font-size-body-text);
+  line-height: var(--line-height-body);
+}
 .text-muted { color: var(--text-muted); }
-.text-sm { font-size: 0.9375rem; }
-.text-xs { font-size: 0.8125rem; }
+.text-sm { font-size: var(--font-size-sm); line-height: var(--line-height-body); }
+.text-xs { font-size: var(--font-size-xs); line-height: var(--line-height-body); }
 .text-center { text-align: center; }
 .font-semibold { font-weight: 600; }
 .font-bold { font-weight: 700; }
-.heading-card { font-size: 1.1rem; }
-.heading-md { font-size: 1.25rem; }
+/* Page + card section titles — size/stack only; use .font-bold / .font-semibold for weight */
+.heading-card {
+  font-family: var(--font-tagline);
+  font-size: var(--font-size-heading-card);
+  line-height: var(--line-height-heading);
+  color: var(--text);
+}
+.heading-md {
+  font-family: var(--font-tagline);
+  font-size: var(--font-size-heading-md);
+  line-height: var(--line-height-heading);
+  color: var(--text);
+}
+/* In-card h3 subheads (guest guide, etc.) — Syne, one step below body */
+.heading-sub {
+  font-family: var(--font-tagline);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: var(--line-height-snug);
+  color: var(--text);
+}
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -592,7 +678,7 @@ input[type="button"].btn {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: var(--font-size-heading-card);
   flex-shrink: 0;
 }
 
@@ -642,7 +728,15 @@ input[type="button"].btn {
 
 /* === Forms === */
 .form-group { margin-bottom: 16px; }
-.form-group label { display: block; font-size: 0.9375rem; font-weight: 500; margin-bottom: 6px; }
+.form-group label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-text);
+  font-weight: 400;
+  line-height: var(--line-height-snug);
+  margin-bottom: 6px;
+  color: var(--text);
+}
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
 .subscribe-form {
@@ -658,19 +752,40 @@ input[type="button"].btn {
 }
 
 input[type="text"],
-input[type="email"],
-textarea {
+input[type="email"] {
   width: 100%;
-  padding: 12px 14px;
+  height: var(--control-height);
+  min-height: var(--control-height);
+  padding: 0 14px;
   border: none;
   border-radius: 0;
-  font-size: 16px;
+  font-size: var(--font-size-body-text);
   font-family: inherit;
+  line-height: var(--line-height-snug);
   background: var(--menu-hover-bg);
   color: var(--text);
   transition: box-shadow 0.15s;
   -webkit-appearance: none;
   appearance: none;
+  box-sizing: border-box;
+}
+
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 0;
+  font-size: var(--font-size-body-text);
+  font-family: inherit;
+  line-height: var(--line-height-textarea);
+  background: var(--menu-hover-bg);
+  color: var(--text);
+  transition: box-shadow 0.15s;
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 100px;
 }
 
 input:focus,
@@ -684,11 +799,17 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
-textarea { resize: vertical; min-height: 100px; }
 textarea.short { min-height: 80px; }
 
 /* === Lists & checklists === */
-.check-item { display: flex; align-items: center; gap: 8px; font-size: 0.9375rem; color: var(--text-muted); }
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size-body-text);
+  line-height: var(--line-height-body);
+  color: var(--text-muted);
+}
 .check-box { width: 16px; height: 16px; border: 1px solid var(--border); border-radius: 0; flex-shrink: 0; }
 
 .dot {
@@ -704,9 +825,9 @@ textarea.short { min-height: 80px; }
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-size: 0.9375rem;
+  font-size: var(--font-size-body-text);
   color: var(--text-muted);
-  line-height: 1.5;
+  line-height: var(--line-height-body);
 }
 
 /* === Steps === */
@@ -720,14 +841,19 @@ textarea.short { min-height: 80px; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8125rem;
+  font-size: var(--font-size-xs);
   color: var(--text-muted);
   flex-shrink: 0;
   font-family: ui-monospace, monospace;
 }
 
-.step-label { font-size: 0.9375rem; font-weight: 500; }
-.step-time { font-size: 0.8125rem; color: var(--text-muted); }
+.step-label {
+  font-size: var(--font-size-body-text);
+  font-weight: 500;
+  line-height: var(--line-height-snug);
+  color: var(--text);
+}
+.step-time { font-size: var(--font-size-xs); line-height: var(--line-height-body); color: var(--text-muted); }
 
 /* === Social cards === */
 .social-card {
@@ -747,16 +873,16 @@ textarea.short { min-height: 80px; }
 .footer {
   flex-shrink: 0;
   border-top: 1px solid var(--border);
-  padding: 20px 0 24px;
+  padding: 12px 0 12px;
   background: var(--bg);
 }
 
-/* Wide: legal left, tagline right */
+/* Wide: legal left, tagline right — baseline aligns mixed fonts better than center */
 .footer-inner {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   gap: 16px;
   width: 100%;
 }
@@ -770,9 +896,9 @@ textarea.short { min-height: 80px; }
   margin: 0;
   padding: 0;
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: var(--font-size-body-text);
   font-weight: 400;
-  line-height: 1.5;
+  line-height: var(--line-height-body);
   color: var(--text-muted);
   text-align: left;
   flex: 1;
@@ -802,12 +928,12 @@ textarea.short { min-height: 80px; }
 .footer-tagline {
   margin: 0;
   padding: 0;
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.35;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  /* Same as hero tagline (.hero--cover .hero-tagline): Syne, weight, tracking */
+  font-family: var(--font-tagline);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
   color: var(--purple);
   text-align: right;
   flex-shrink: 0;
@@ -865,7 +991,7 @@ textarea.short { min-height: 80px; }
 
 .section-indent { padding-left: 52px; }
 .link-list { display: flex; gap: 6px; flex-wrap: wrap; }
-.home-section-flush { padding-bottom: 64px; }
+.home-section-flush { padding-bottom: 48px; }
 
 /* Tight stack: subscribe CTA + Why Future Shock (single section, small gap) */
 .home-brand-stack {
@@ -880,14 +1006,14 @@ section.home-section-flush:has(+ section .home-brand-stack) {
 }
 /*
  * Teeth sit inside the hero, so the visible gap tooth→card reads larger than padding alone.
- * Use a smaller top edge than bottom on tablet/desktop so it matches the band above the footer.
- * Narrow phones (≤480px): equal top/bottom edges.
+ * Bottom edge stays modest so the subscribe/brand block + footer read as one column with little dead air.
+ * Narrow phones (≤480px): slightly more top than bottom (cards are nudged up with transform).
  */
 section.home-section-flush:has(.home-brand-stack) {
   position: relative;
   z-index: 2;
   --home-brand-edge-top: 36px;
-  --home-brand-edge-bottom: 64px;
+  --home-brand-edge-bottom: 22px;
   --home-brand-overlap: 56px;
   padding-top: var(--home-brand-edge-top);
   padding-bottom: var(--home-brand-edge-bottom);
@@ -960,17 +1086,14 @@ section.hero + section.home-section-flush:has(.home-brand-stack) {
   section.home-section-flush:has(.home-brand-stack) {
     --home-brand-overlap: 32px;
   }
-  .card {
-    padding: 17px;
-  }
   .home-brand-stack {
     gap: 12px;
     width: 100%;
     min-width: 0;
   }
   .brand-card-text .heading-md {
-    font-size: clamp(1.05rem, 4.2vw, 1.25rem);
-    line-height: 1.25;
+    font-size: clamp(1.05rem, 4.2vw, var(--font-size-heading-md));
+    line-height: var(--line-height-snug);
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
@@ -1017,7 +1140,7 @@ section.hero + section.home-section-flush:has(.home-brand-stack) {
   }
   section.home-section-flush:has(.home-brand-stack) {
     --home-brand-edge-top: 48px;
-    --home-brand-edge-bottom: 48px;
+    --home-brand-edge-bottom: 20px;
     /* Pull up with higher teeth (narrow-phone clip-path) */
     --home-brand-overlap: 56px;
   }
@@ -1025,34 +1148,47 @@ section.hero + section.home-section-flush:has(.home-brand-stack) {
   section.home-section-flush:has(.home-brand-stack) .home-brand-stack {
     transform: translateY(-30px);
   }
-  .card {
-    padding: 16px;
-  }
 }
 
 /* === Markdown posts (Eleventy) === */
-/* Same vertical band as fixed ☰ (48px): line box aligns with burger row */
+/* Back sits above the card (white band); inset matches .card inner padding so text lines up with title */
 .post-back {
   display: flex;
   align-items: center;
-  min-height: var(--nav-burger-hit);
-  margin: 0 0 8px;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: var(--control-height);
+  margin: 0 0 12px;
+  box-sizing: border-box;
 }
 
-/* Internal “back” / nav links: brand purple, no hover color shift (use on any similar control) */
+.page--post .post-back {
+  padding-left: var(--card-pad);
+}
+
+/* Internal “back” / nav links */
 .link-back,
 .post-back-link {
   font-family: var(--font-body);
-  font-size: var(--font-size-ui);
+  font-size: var(--font-size-body-text);
   font-weight: 500;
-  line-height: var(--nav-burger-hit);
+  line-height: var(--line-height-snug);
   color: var(--purple);
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-height);
+  padding: 0 12px 0 0;
+  margin-left: 0;
+  border-radius: 0;
+  box-sizing: border-box;
+  transition: background 0.15s, color 0.15s;
 }
 .link-back:hover,
 .post-back-link:hover {
   color: var(--purple);
   text-decoration: none;
+  background: var(--menu-hover-bg);
 }
 .link-back:focus-visible,
 .post-back-link:focus-visible {
@@ -1062,10 +1198,27 @@ section.hero + section.home-section-flush:has(.home-brand-stack) {
   outline-offset: 2px;
 }
 
-.post-body { color: var(--text); line-height: 1.65; }
+.post-body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-text);
+  color: var(--text);
+  line-height: var(--line-height-prose);
+}
 .post-body p { margin-bottom: 1rem; }
-.post-body h2 { font-size: 1.25rem; font-weight: 700; margin: 1.5rem 0 0.5rem; font-family: var(--font-display); }
-.post-body h3 { font-size: 1.05rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
+.post-body h2 {
+  font-family: var(--font-tagline);
+  font-size: var(--font-size-heading-md);
+  font-weight: 700;
+  line-height: var(--line-height-heading);
+  margin: 1.5rem 0 0.5rem;
+}
+.post-body h3 {
+  font-family: var(--font-tagline);
+  font-size: var(--font-size-post-h3);
+  font-weight: 600;
+  line-height: var(--line-height-heading);
+  margin: 1.25rem 0 0.5rem;
+}
 .post-body ul, .post-body ol { margin: 0 0 1rem 1.25rem; }
 .post-body li { margin-bottom: 0.35rem; }
 .post-body a { text-decoration: underline; }
