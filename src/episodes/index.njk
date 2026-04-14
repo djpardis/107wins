@@ -1,14 +1,14 @@
 ---
 layout: layouts/base.njk
-title: "Episodes — Future Shock Media"
-description: "Browse all episodes from Future Shock Media. Conversations about business building, tech trends, and proven tactics."
+title: "Videos — Future Shock Media"
+description: "Browse all videos from Future Shock Media. Conversations about business building, tech trends, and proven tactics."
 permalink: /episodes/
 ---
 {% import "macros/episode-card.njk" as ep %}
 
 <main class="container page">
-  <h1 class="section-title">All episodes</h1>
-  <p class="section-desc">Browse all episodes from Future Shock Media.</p>
+  <h1 class="section-title">Videos</h1>
+  <p class="section-desc">Browse all videos from Future Shock Media.</p>
   {% set sortedEpisodes = episodes | sortEpisodesDesc %}
   {% if sortedEpisodes.length %}
   <div class="card-list">
@@ -20,7 +20,7 @@ permalink: /episodes/
   <div class="card empty-state">
     <div class="icon-box icon-box-lg">&#127911;</div>
     <h2 class="font-bold heading-md mb-2">Coming soon</h2>
-    <p class="text-sm text-muted">We're working on our first episodes. Check back soon or follow us on social media for updates.</p>
+    <p class="text-sm text-muted">We're working on our first videos. Check back soon or follow us on social media for updates.</p>
     <div class="mt-6"><a href="/follow/" class="btn btn-primary">Follow us for updates &rarr;</a></div>
   </div>
   {% endif %}

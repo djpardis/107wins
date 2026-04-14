@@ -1,5 +1,5 @@
 [
-  { "id": "youtube", "name": "YouTube", "url": "https://youtube.com/@futureshockmedia", "desc": "Watch our latest episodes and behind-the-scenes content" },
+  { "id": "youtube", "name": "YouTube", "url": "https://youtube.com/@futureshockmedia", "desc": "Watch our latest videos and behind-the-scenes content" },
   { "id": "instagram", "name": "Instagram", "url": "https://instagram.com/futureshockmedia", "desc": "Daily updates, stories, and visual content" },
   { "id": "bluesky", "name": "Bluesky", "url": "https://bsky.app/profile/futureshock.media", "desc": "Join the conversation on the open social web" },
   { "id": "x", "name": "X", "url": "https://x.com/futureshockmedia", "desc": "Updates and announcements" },

@@ -17,6 +17,9 @@
   --menu-hover-bg: color-mix(in srgb, var(--purple) 16%, var(--surface));
   --teal: #4f8594;
   --peach: #c49a7a;
+  /* Home subscribe CTA — sci‑fi burnt orange, white label */
+  --subscribe-orange: #c75b18;
+  --subscribe-orange-hover: #a84a14;
   --link: #8a2a85;
   --link-hover: #752573;
   --focus: rgba(149, 45, 144, 0.3);
@@ -430,6 +433,20 @@ input[type="button"].btn {
   color: var(--cream-ink);
   box-shadow: 0 2px 10px rgba(149, 45, 144, 0.22);
 }
+
+/* Home subscribe card only (partial used on index) — flat fill, minimal banding */
+.subscribe-form .btn-primary {
+  background: var(--subscribe-orange);
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 8px rgba(167, 74, 20, 0.22);
+}
+.subscribe-form .btn-primary:hover {
+  background: var(--subscribe-orange-hover);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(167, 74, 20, 0.28);
+}
+
 .btn-outline {
   background: var(--surface);
   color: var(--text-muted);
@@ -455,7 +472,7 @@ input[type="button"].btn {
 
 .card-hover:hover { transform: translateY(-2px); }
 
-/* Blog: pinned post — pin inline with title row, RHS */
+/* Articles: pinned post — pin inline with title row, RHS */
 .card-title-row {
   display: flex;
   align-items: flex-start;
@@ -763,6 +780,22 @@ textarea.short { min-height: 80px; }
 
 .footer-legal-line {
   display: inline;
+}
+
+.footer-legal-block a {
+  color: var(--purple);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+.footer-legal-block a:hover {
+  color: var(--purple-deep);
+  text-decoration-thickness: 2px;
+}
+.footer-legal-block a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }
 
 .footer-tagline {

@@ -1,5 +1,5 @@
 ---
-title: "Welcome to the Future Shock Media blog"
+title: "Welcome to Future Shock Media"
 description: "Notes from the network—boring on purpose."
 date: 2026-04-08
 pinned: true
