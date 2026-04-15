@@ -1182,7 +1182,17 @@ section.hero + section.home-section-flush:has(.home-brand-stack) {
   margin-left: 0;
   border-radius: 0;
   box-sizing: border-box;
+  position: relative;
   transition: background 0.15s, color 0.15s;
+}
+
+.post-back-link::before {
+  content: "\2190";
+  position: absolute;
+  left: -1.05em;
+  top: 50%;
+  transform: translateY(-50%);
+  line-height: 1;
 }
 .link-back:hover,
 .post-back-link:hover {
