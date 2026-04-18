@@ -1,13 +1,7 @@
-<div class="card brand-card">
-  <div class="brand-card-inner">
-    <div class="brand-card-text">
-      <h2 class="font-bold heading-md">Subscribe to Future Shock Media</h2>
-      <form class="subscribe-form" action="{{ site.subscribeFormAction }}" method="POST">
-        <input type="hidden" name="_subject" value="Future Shock Media — Publication / episode subscribe">
-        <input type="hidden" name="_next" value="{{ site.url }}{{ page.url }}">
-        <input type="email" id="subscribe-email" name="email" placeholder="Your email" required autocomplete="email" aria-label="Email">
-        <button type="submit" class="btn btn-primary">Subscribe &rarr;</button>
-      </form>
-    </div>
-  </div>
-</div>
+<form class="subscribe-form" action="{{ site.subscribeFormAction }}" method="POST">
+  <input type="hidden" name="_subject" value="Future Shock Media — Publication subscribe">
+  <input type="hidden" name="_next" value="{{ site.url }}{{ page.url }}">
+  <label class="sr-only" for="subscribe-email">Email</label>
+  <input class="subscribe-input" type="email" id="subscribe-email" name="email" placeholder="Your email" required autocomplete="email">
+  <button type="submit" class="subscribe-submit">Subscribe &rarr;</button>
+</form>

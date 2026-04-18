@@ -1,6 +1,4 @@
 [
-  { "label": "FSM", "url": "/" },
-  { "label": "Articles", "url": "/posts/" },
-  { "label": "Videos", "url": "/episodes/" },
-  { "label": "Guest guide", "url": "/guest-guide/" }
+  { "num": "§01", "label": "Articles", "url": "/articles/" },
+  { "num": "§02", "label": "Videos",   "url": "/videos/"   }
 ]

@@ -1,17 +1,15 @@
 ---
 layout: layouts/base.njk
 ---
-<main class="container page page--post">
-  <nav class="post-back" aria-label="Articles">
-    <a href="/posts/" class="post-back-link link-back">Back to articles</a>
-  </nav>
-  <article class="card post">
-    {% if page.date %}
-    <p class="text-xs text-muted mb-2"><time datetime="{{ page.date | dateIso }}">{{ page.date | readableDate }}</time></p>
-    {% endif %}
-    <h1 class="section-title">{{ title }}</h1>
-    {% if description %}<p class="section-desc">{{ description }}</p>{% endif %}
-    <div class="post-body mt-6">
+{% include "partials/mini-masthead.njk" %}
+
+<main class="container page">
+  <p class="post-back"><a class="post-back-link mono" href="/articles/">&larr; Articles</a></p>
+  <article class="article">
+    {% if page.date %}<p class="mono article-date"><time datetime="{{ page.date | dateIso }}">{{ page.date | datelineShort }}</time></p>{% endif %}
+    <h1 class="page-title">{{ title }}</h1>
+    {% if description %}<p class="article-standfirst">{{ description }}</p>{% endif %}
+    <div class="article-body">
       {{ content | safe }}
     </div>
   </article>

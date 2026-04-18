@@ -1,48 +1,77 @@
 ---
 layout: layouts/base.njk
 title: "Future Shock Media — Boring on purpose"
-description: "Future Shock Media: boring on purpose. Podcasts and media with a retro-futuristic sensibility—signal without the noise."
+description: "Podcast and publication. Boring on purpose."
 ogTitle: "Future Shock Media — Boring on purpose"
-ogDescription: "Boring on purpose. Podcasts and media with a retro-futuristic sensibility—signal without the noise."
+ogDescription: "Podcast and publication. Boring on purpose."
 ---
-{% import "macros/episode-card.njk" as ep %}
+<header class="masthead" role="banner">
+  <div class="container masthead-inner">
+    <h1 class="masthead-wordmark" aria-label="{{ site.title }}">
+      <span class="wordmark-line">Future</span>
+      <span class="wordmark-line">Shock</span>
+      <span class="wordmark-line">Media</span>
+    </h1>
+    <p class="masthead-tagline">{{ site.subtitle }}</p>
 
-<section class="hero hero--cover" aria-label="Intro">
-  <div class="hero-inner">
-    <div class="hero-text">
-      <h1 class="hero-title-stack">{% for word in site.title.split(' ') %}<span class="hero-brand-line">{{ word }}</span>{% endfor %}</h1>
-      <p class="hero-tagline">{{ site.subtitle }}</p>
+    <p class="masthead-about">This is a podcast and publication for our community. We&rsquo;re inspired by the Alvin Toffler book by the same name. The lessons are about learning and adaptability, and playing the long game by being boring on purpose.</p>
+
+    <div class="masthead-subscribe">
+      <form class="subscribe-form subscribe-form--hero" action="{{ site.subscribeFormAction }}" method="POST">
+        <input type="hidden" name="_subject" value="Future Shock Media — Publication subscribe">
+        <input type="hidden" name="_next" value="{{ site.url }}{{ page.url }}">
+        <label class="sr-only" for="subscribe-email">Email</label>
+        <input class="subscribe-input" type="email" id="subscribe-email" name="email" placeholder="Your email" required autocomplete="email">
+        <button type="submit" class="subscribe-submit">Subscribe &rarr;</button>
+      </form>
     </div>
-  </div>
-</section>
 
-{% set sortedEpisodes = episodes | sortEpisodesDesc %}
-{% if sortedEpisodes.length %}
-<section class="container home-section-flush">
-  <div class="flex-between mb-6">
-    <h2 class="section-title mb-0">Latest videos</h2>
-    <a href="/episodes/" class="btn btn-outline btn-sm">View all &rarr;</a>
+    <nav class="masthead-index" aria-label="Sections">
+      <ol class="index-list">
+        {% for item in navigation %}
+        <li class="index-item">
+          <a href="{{ item.url }}" class="index-link">
+            <span class="mono index-num">{{ item.num }}</span>
+            <span class="index-label">{{ item.label }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </nav>
   </div>
-  <div class="card-list">
-    {% for episode in sortedEpisodes %}
-    {% if loop.index0 < 3 %}
-    {{ ep.episodeCard(episode, clickable=true, truncateDesc=true) }}
-    {% endif %}
-    {% endfor %}
-  </div>
-</section>
-{% endif %}
+</header>
 
-<section class="container home-section-flush">
-  <div class="home-brand-stack">
-    {% include "partials/subscribe-cta.njk" %}
-    <div class="card brand-card">
-      <div class="brand-card-inner">
-        <div class="brand-card-text">
-          <h2 class="font-bold heading-md">Why &ldquo;Future Shock&rdquo;?</h2>
-          <p class="text-muted">This is a podcast and publication for our community. We&rsquo;re inspired by the Alvin Toffler book by the same name. The lessons are about learning and adaptability, and playing the long game by being boring on purpose. <a href="/guest-request/">Be our guest.</a></p>
-        </div>
-      </div>
+<main class="home">
+  <div class="container">
+
+    <div class="home-split">
+      <section id="guest" class="section section--guests">
+        <h2 class="section-head"><span class="mono section-num">§03</span> Guest guide</h2>
+        <ul class="link-stack">
+          <li><a href="/guest-request/">Be our guest</a></li>
+          <li><a href="/guest-guide/">Guest guide</a></li>
+          <li><a href="/guest-pre-interview/">Pre-interview questionnaire</a></li>
+        </ul>
+      </section>
+
+      <section id="hosts" class="section section--hosts">
+        <h2 class="section-head"><span class="mono section-num">§04</span> Meet your hosts</h2>
+        <details class="host">
+          <summary class="host-name mono">01 &middot; Pardis</summary>
+          <div class="host-body">
+            <p>Pardis is the founder and CEO of General Folders, a company pioneering secure data transfer solutions for enterprises. Previously, she led data science teams at Twitter and Carbon Health, building products with the customer in mind.</p>
+            <p>In her free time, you&rsquo;ll find her watching Giants games or writing about the lessons learned from startup life.</p>
+          </div>
+        </details>
+        <details class="host">
+          <summary class="host-name mono">02 &middot; Jenni</summary>
+          <div class="host-body">
+            <p>Jenni is a host on Future Shock Media, bringing years of experience closing deals and building sales teams from the ground up. She has an uncanny ability to build community and strong relationships.</p>
+            <p>Her network spans founders, VCs, and operators. She&rsquo;ll share the real mechanics of how deals get done, beyond the surface-level advice that fills most business books.</p>
+          </div>
+        </details>
+      </section>
     </div>
+
   </div>
-</section>
+</main>

@@ -1,0 +1,25 @@
+---
+layout: layouts/base.njk
+title: "Articles — Future Shock Media"
+description: "Articles from Future Shock Media."
+permalink: /articles/
+---
+{% set sortedPosts = collections.posts | sortPostsPinnedFirst %}
+{% include "partials/mini-masthead.njk" %}
+
+<main class="container page">
+  <h1 class="page-title"><span class="mono page-num">§01</span> Articles</h1>
+
+  {% if sortedPosts.length %}
+  <ol class="posts-list">
+    {% for post in sortedPosts %}
+    <li class="posts-row">
+      <a href="{{ post.url }}" class="posts-link">
+        <time class="mono posts-date" datetime="{{ post.date | dateIso }}">{{ post.date | datelineShort }}</time>
+        <span class="posts-title">{{ post.data.title }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ol>
+  {% endif %}
+</main>
