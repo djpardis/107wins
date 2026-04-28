@@ -371,6 +371,7 @@ summary.host-name:hover { color: var(--purple); }
   margin: 0;
 }
 .subscribe-submit:hover { opacity: 0.75; }
+.subscribe-success { margin: 0; font-family: var(--font-body); font-size: var(--fs-body); font-weight: 600; line-height: var(--lh-prose); }
 
 .subscribe-form--hero { color: var(--purple-light); border-bottom-color: var(--purple-light); }
 .subscribe-form--hero:focus-within { border-bottom-color: #fff; }
