@@ -375,8 +375,17 @@ summary.host-name:hover { color: var(--purple); }
 
 .subscribe-form--hero { color: var(--purple-light); border-bottom-color: var(--purple-light); }
 .subscribe-form--hero:focus-within { border-bottom-color: #fff; }
-.subscribe-form--hero .subscribe-input { color: var(--purple-light); }
+.subscribe-form--hero .subscribe-input {
+  color: var(--purple-light);
+  -webkit-text-fill-color: var(--purple-light);
+}
 .subscribe-form--hero .subscribe-input::placeholder { color: var(--purple-light); opacity: 0.8; }
+.subscribe-form--hero .subscribe-input:-webkit-autofill,
+.subscribe-form--hero .subscribe-input:-webkit-autofill:hover,
+.subscribe-form--hero .subscribe-input:-webkit-autofill:focus,
+.subscribe-form--hero .subscribe-input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--purple-light) !important;
+}
 .subscribe-form--hero .subscribe-submit { color: var(--warm); }
 .subscribe-form--hero .subscribe-submit:hover { color: var(--warm-hover); opacity: 1; }
 

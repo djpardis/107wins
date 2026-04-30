@@ -29,14 +29,19 @@
           var btn = form.querySelector('.subscribe-submit');
           btn.disabled = true;
           btn.textContent = 'Sending\u2026';
-          fetch(form.action, { method: 'POST', body: new FormData(form), mode: 'no-cors' })
-            .then(function () {
-              form.innerHTML = '<p class="subscribe-success">You\u2019re in.</p>';
-            })
-            .catch(function () {
-              btn.disabled = false;
-              btn.textContent = 'Subscribe \u2192';
-            });
+          // Use a hidden iframe so the POST is a real form submit (triggers
+          // MailerLite's double opt-in flow) without navigating the page.
+          var id = 'ml_frame_' + Date.now();
+          var frame = document.createElement('iframe');
+          frame.name = id;
+          frame.style.display = 'none';
+          document.body.appendChild(frame);
+          form.target = id;
+          form.submit();
+          setTimeout(function () {
+            form.innerHTML = '<p class="subscribe-success">You\u2019re in.</p>';
+            document.body.removeChild(frame);
+          }, 800);
         });
       });
     });
