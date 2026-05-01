@@ -17,11 +17,10 @@ ogDescription: "Podcast and publication. Boring on purpose."
     <p class="masthead-about">This is a podcast and publication for our community. We&rsquo;re inspired by the Alvin Toffler book by the same name. The lessons are about learning and adaptability, and playing the long game by being boring on purpose.</p>
 
     <div class="masthead-subscribe">
-      <form class="subscribe-form subscribe-form--hero" action="{{ site.subscribeFormAction }}" method="POST">
-        <input type="hidden" name="ml-submit" value="1">
-        <input type="hidden" name="anticsrf" value="true">
+      <form class="subscribe-form subscribe-form--hero" data-action="{{ site.subscribeApiBase }}/api/subscribe" data-source="{{ site.subscribeSource }}" novalidate>
         <label class="sr-only" for="subscribe-email">Email</label>
-        <input class="subscribe-input" type="email" id="subscribe-email" name="fields[email]" placeholder="Your email" required autocomplete="email">
+        <input class="subscribe-input" type="email" id="subscribe-email" name="email" placeholder="Your email" required autocomplete="email">
+        <input class="subscribe-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
         <button type="submit" class="subscribe-submit">Subscribe &rarr;</button>
       </form>
     </div>

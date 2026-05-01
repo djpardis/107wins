@@ -20,28 +20,85 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/favicon.svg">
   <link rel="stylesheet" href="/css/style.css">
-  <script>(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');ml('account','1709436');</script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       document.querySelectorAll('.subscribe-form').forEach(function (form) {
+        var endpoint = form.getAttribute('data-action');
+        if (!endpoint) return;
+        var source = form.getAttribute('data-source') || '';
+        var btn = form.querySelector('.subscribe-submit');
+        var emailInput = form.querySelector('input[type="email"]');
+        var hpInput = form.querySelector('input[name="website"]');
+        var originalLabel = btn ? btn.textContent : 'Subscribe';
+
+        function showError(msg) {
+          var existing = form.parentNode.querySelector('.subscribe-error[data-for="' + form.id + '"]') ||
+                         (form.nextElementSibling && form.nextElementSibling.classList && form.nextElementSibling.classList.contains('subscribe-error') ? form.nextElementSibling : null);
+          if (existing) existing.remove();
+          var p = document.createElement('p');
+          p.className = 'subscribe-error';
+          p.setAttribute('role', 'status');
+          if (form.id) p.setAttribute('data-for', form.id);
+          p.textContent = msg;
+          form.insertAdjacentElement('afterend', p);
+        }
+
+        function showSuccess(msg) {
+          form.innerHTML = '<p class="subscribe-success">' + msg + '</p>';
+          form.classList.add('subscribe-form--done');
+        }
+
         form.addEventListener('submit', function (e) {
           e.preventDefault();
-          var btn = form.querySelector('.subscribe-submit');
-          btn.disabled = true;
-          btn.textContent = 'Sending\u2026';
-          // Use a hidden iframe so the POST is a real form submit (triggers
-          // MailerLite's double opt-in flow) without navigating the page.
-          var id = 'ml_frame_' + Date.now();
-          var frame = document.createElement('iframe');
-          frame.name = id;
-          frame.style.display = 'none';
-          document.body.appendChild(frame);
-          form.target = id;
-          form.submit();
-          setTimeout(function () {
-            form.innerHTML = '<p class="subscribe-success">You\u2019re in.</p>';
-            document.body.removeChild(frame);
-          }, 800);
+          var email = emailInput && emailInput.value ? emailInput.value.trim() : '';
+          if (!email) return;
+          if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
+
+          var body = {
+            email: email,
+            source: source,
+            website: hpInput ? hpInput.value : ''
+          };
+
+          fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(body),
+            credentials: 'omit',
+            mode: 'cors'
+          }).then(function (res) {
+            return res.json().then(function (data) {
+              return { status: res.status, data: data || {} };
+            }, function () {
+              return { status: res.status, data: {} };
+            });
+          }).then(function (result) {
+            var status = result.status;
+            var data = result.data;
+            if (status === 200 && data.ok) {
+              showSuccess(data.state === 'active'
+                ? 'You\u2019re already on the list.'
+                : 'Check your email to confirm.');
+              return;
+            }
+            var msg;
+            if (status === 400 && data.error === 'invalid_email') {
+              msg = 'That email looks invalid.';
+            } else if (status === 400 && data.error === 'turnstile_failed') {
+              msg = 'Spam check failed. Please try again.';
+            } else if (status === 429) {
+              msg = 'Too many tries — please wait a moment.';
+            } else if (status === 502) {
+              msg = 'Couldn\u2019t send confirmation. Please try again.';
+            } else {
+              msg = 'Something went wrong. Please try again.';
+            }
+            showError(msg);
+            if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
+          }).catch(function () {
+            showError('Network error. Please try again.');
+            if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
+          });
         });
       });
     });

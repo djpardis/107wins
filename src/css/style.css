@@ -371,7 +371,32 @@ summary.host-name:hover { color: var(--purple); }
   margin: 0;
 }
 .subscribe-submit:hover { opacity: 0.75; }
+.subscribe-submit[disabled] { opacity: 0.55; cursor: default; }
 .subscribe-success { margin: 0; font-family: var(--font-body); font-size: var(--fs-body); font-weight: 600; line-height: var(--lh-prose); }
+.subscribe-form--done { border-bottom-color: transparent; }
+
+/* Honeypot — visually hidden but still focusable to bots that auto-fill anything. */
+.subscribe-hp {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.subscribe-error {
+  margin: 0.4rem 0 0;
+  max-width: 62ch;
+  font-family: var(--font-body);
+  font-size: var(--fs-small, 0.95rem);
+  font-weight: 600;
+  line-height: var(--lh-prose);
+  color: var(--warm, #c14a2a);
+}
+.subscribe-form--hero + .subscribe-error { color: var(--warm); }
 
 .subscribe-form--hero { color: var(--purple-light); border-bottom-color: var(--purple-light); }
 .subscribe-form--hero:focus-within { border-bottom-color: #fff; }
