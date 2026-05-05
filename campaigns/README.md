@@ -25,28 +25,20 @@ type: update
 ---
 ```
 
+Subjects should read like a straightforward news/update email. Do not use em dashes (`—`) in subject lines.
+
 Every campaign body must start with:
 
 ```text
 Hey,
 ```
 
-Every campaign body must end with:
+Every campaign body must end with this marker:
 
 ```text
-More soon.
-
-— Future Shock Media
-Boring on purpose.
-
-You're receiving this because you subscribed to Future Shock Media. To stop, unsubscribe here:
-{{unsubscribe_url}}.
+{{campaign_footer}}
 ```
 
-In Markdown drafts, write that footer as a link:
-
-```markdown
-You're receiving this because you subscribed to Future Shock Media. To stop, [unsubscribe here]({{unsubscribe_url}}).
-```
+The newsletter scripts replace that marker with the shared footer from `campaigns/_templates/footer.md`.
 
 The newsletter Worker replaces `{{unsubscribe_url}}` for each subscriber. Do not send a campaign until the Markdown draft and preview are reviewed.
