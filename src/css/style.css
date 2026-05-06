@@ -48,6 +48,9 @@
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 body {
   margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-body);
@@ -56,6 +59,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+.site-content { flex: 1 0 auto; }
 img, svg { max-width: 100%; display: block; }
 p { margin: 0 0 var(--space-2); }
 h1, h2, h3 { margin: 0 0 var(--space-1); font-weight: 700; font-family: var(--font-body); }
