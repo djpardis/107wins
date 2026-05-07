@@ -165,7 +165,12 @@ a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   padding: 0.2rem 0;
 }
 .index-link:hover,
-.index-link:focus { color: #fff; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 2px; }
+.index-link:focus { color: #fff; }
+.index-label {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 2px;
+}
 .index-num {
   font-family: var(--font-mono);
   font-weight: 700;
@@ -193,7 +198,6 @@ a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   gap: 0.5em;
 }
 .index-social-link {
-  position: relative;
   width: 0.9em;
   height: 0.9em;
   display: inline-flex;
@@ -203,22 +207,9 @@ a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   line-height: 1;
   text-decoration: none;
 }
-.index-social-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -0.18em;
-  height: 2px;
-  background: transparent;
-}
 .index-social-link:hover,
 .index-social-link:focus-visible {
   color: var(--warm-hover);
-}
-.index-social-link:hover::after,
-.index-social-link:focus-visible::after {
-  background: currentColor;
 }
 .index-social-link .social-icon {
   width: 100%;
