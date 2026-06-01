@@ -26,7 +26,7 @@
   --fs-menu:     clamp(1.125rem, 0.95rem + 0.7vw, 1.5rem);     /* 18–24 */
   --fs-h2:       clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);     /* 20–28 */
   --fs-h1:       clamp(1.5rem, 1.2rem + 1.3vw, 2.25rem);       /* 24–36 */
-  --fs-wordmark:    clamp(2.5rem, 1.5rem + 6vw, 6.5rem);       /* 40–104 — smaller so menu+about fit */
+  --fs-wordmark:    clamp(2.5rem, 1.5rem + 6vw, 6.5rem);       /* 40-104 - smaller so menu+about fit */
   --fs-wordmark-sm: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);      /* 16–20 */
 
   --lh-body:  1.55;
@@ -93,7 +93,7 @@ a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .inline-link { color: var(--purple); }
 
 /* =========================================================================
-   Masthead (home hero) — compact so menu + about fit above the fold
+   Masthead (home hero) - compact so menu + about fit above the fold
    ========================================================================= */
 .masthead {
   position: relative;
@@ -265,7 +265,7 @@ a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .wordmark--sm:focus { color: var(--purple); text-decoration: none; }
 
 /* =========================================================================
-   Home — 2-column magazine grid below the hero
+   Home - 2-column magazine grid below the hero
    ========================================================================= */
 .home .section { margin-top: var(--space-5); }
 .home .section:first-of-type { margin-top: var(--space-4); }
@@ -337,7 +337,7 @@ a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   stroke: currentColor;
 }
 
-/* Hosts — collapsible rows (details/summary) */
+/* Hosts - collapsible rows (details/summary) */
 #hosts .host + .host { margin-top: var(--space-1); }
 .host { border-top: 1px solid var(--purple-light); }
 #hosts .host:last-of-type { border-bottom: 1px solid var(--purple-light); }
@@ -375,7 +375,7 @@ summary.host-name:hover { color: var(--purple); }
 .host-body { padding: 0 0 var(--space-3); }
 .host-body p { font-size: var(--fs-body); line-height: var(--lh-prose); }
 
-/* Articles list — date + title, DM Sans */
+/* Articles list - date + title, DM Sans */
 .posts-list { list-style: none; margin: 0; padding: 0; }
 .posts-link {
   display: grid;
@@ -422,7 +422,7 @@ summary.host-name:hover { color: var(--purple); }
 .link-stack a:focus { text-decoration: underline; text-decoration-thickness: 2px; color: var(--purple-deep); }
 
 /* =========================================================================
-   Subscribe — typographic line, no boxes. Matches the rest of the site.
+   Subscribe - typographic line, no boxes. Matches the rest of the site.
    ========================================================================= */
 .subscribe-form {
   display: flex;
@@ -489,7 +489,7 @@ summary.host-name:hover { color: var(--purple); }
 .subscribe-success { margin: 0; font-family: var(--font-body); font-size: var(--fs-body); font-weight: 600; line-height: var(--lh-prose); }
 .subscribe-form--done { border-bottom-color: transparent; }
 
-/* Honeypot — visually hidden but still focusable to bots that auto-fill anything. */
+/* Honeypot - visually hidden but still focusable to bots that auto-fill anything. */
 .subscribe-hp {
   position: absolute;
   left: -10000px;
@@ -669,7 +669,7 @@ summary.host-name:hover { color: var(--purple); }
   line-height: var(--lh-prose);
 }
 .bullet-list li::before {
-  content: "—";
+  content: "-";
   position: absolute;
   left: 0;
   color: var(--ink-soft);
@@ -714,6 +714,28 @@ summary.host-name:hover { color: var(--purple); }
 .form-group textarea::placeholder { color: var(--ink-soft); opacity: 0.5; }
 .form-group input:focus,
 .form-group textarea:focus { outline: none; border-color: var(--purple); box-shadow: 0 0 0 2px var(--focus); }
+.form-hp {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.form-message,
+.form-success {
+  margin: var(--space-2) 0 0;
+  max-width: 62ch;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  line-height: var(--lh-prose);
+}
+.form-message--error { color: var(--purple-deep); }
+.form-success { color: var(--ink); }
+.form-success:focus { outline: 2px solid var(--focus); outline-offset: 4px; }
 
 .btn-warm {
   display: inline-flex;
@@ -737,6 +759,7 @@ summary.host-name:hover { color: var(--purple); }
 }
 .btn-warm:hover,
 .btn-warm:focus { color: var(--warm-hover); background: transparent; text-decoration: underline; }
+.btn-warm[disabled] { opacity: 0.55; cursor: default; text-decoration: none; }
 
 /* =========================================================================
    Back link + colophon

@@ -87,7 +87,7 @@
             } else if (status === 400 && data.error === 'turnstile_failed') {
               msg = 'Spam check failed. Please try again.';
             } else if (status === 429) {
-              msg = 'Too many tries — please wait a moment.';
+              msg = 'Too many tries. Please wait a moment.';
             } else if (status === 502) {
               msg = 'Couldn\u2019t send confirmation. Please try again.';
             } else {
@@ -97,6 +97,78 @@
             if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
           }).catch(function () {
             showError('Network error. Please try again.');
+            if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
+          });
+        });
+      });
+
+      document.querySelectorAll('.js-form-worker').forEach(function (form) {
+        var endpoint = form.getAttribute('action');
+        if (!endpoint) return;
+
+        var btn = form.querySelector('button[type="submit"]');
+        var originalLabel = btn ? btn.textContent : 'Submit';
+
+        function clearMessage() {
+          var existing = form.nextElementSibling;
+          if (existing && existing.classList && existing.classList.contains('form-message')) {
+            existing.remove();
+          }
+        }
+
+        function showMessage(msg, type) {
+          clearMessage();
+          var p = document.createElement('p');
+          p.className = 'form-message form-message--' + type;
+          p.setAttribute('role', 'status');
+          p.textContent = msg;
+          form.insertAdjacentElement('afterend', p);
+        }
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          clearMessage();
+          if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
+
+          var body = {};
+          new FormData(form).forEach(function (value, key) {
+            body[key] = value;
+          });
+
+          fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(body),
+            credentials: 'omit',
+            mode: 'cors'
+          }).then(function (res) {
+            return res.json().then(function (data) {
+              return { ok: res.ok, data: data || {} };
+            }, function () {
+              return { ok: res.ok, data: {} };
+            });
+          }).then(function (result) {
+            if (result.ok && result.data.ok) {
+              var success = document.createElement('p');
+              success.className = 'form-success';
+              success.setAttribute('role', 'status');
+              success.setAttribute('tabindex', '-1');
+              success.textContent = form.getAttribute('data-success') || 'Thank you. Your submission was received.';
+              form.replaceChildren(success);
+              success.focus({ preventScroll: true });
+              return;
+            }
+
+            var error = result.data.error || '';
+            var msg = error.indexOf('Missing required field') === 0
+              ? 'Please fill out all required fields.'
+              : error.indexOf('Email field must be valid') === 0
+                ? 'That email looks invalid.'
+                : 'Something went wrong. Please try again.';
+            showMessage(msg, 'error');
+            if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
+          }).catch(function () {
+            showMessage('Network error. Please try again.', 'error');
             if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
           });
         });

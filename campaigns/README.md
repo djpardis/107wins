@@ -8,10 +8,10 @@ Campaign drafts live here as Markdown so Future Shock Media copy can be reviewed
 
 ## Folders
 
-- `updates/` — general Future Shock Media updates
-- `episodes/` — emails tied to a specific episode or post
-- `other/` — anything that does not fit the two main types yet
-- `_templates/` — copy these when drafting a new campaign
+- `updates/` - general Future Shock Media updates
+- `episodes/` - emails tied to a specific episode or post
+- `other/` - anything that does not fit the two main types yet
+- `_templates/` - copy these when drafting a new campaign
 
 ## Required Shape
 
@@ -25,7 +25,7 @@ type: update
 ---
 ```
 
-Subjects should read like a straightforward news/update email. Do not use em dashes (`—`) in subject lines.
+Subjects should read like a straightforward news/update email. Do not use em dashes in subject lines.
 
 Every campaign body must start with:
 

@@ -1,6 +1,6 @@
 More soon.
 
-— Future Shock Media  
+- Future Shock Media  
 *Boring on purpose.*
 
 You're receiving this because you subscribed to Future Shock Media.  

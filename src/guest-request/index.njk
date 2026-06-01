@@ -1,6 +1,6 @@
 ---
 layout: layouts/base.njk
-title: "Be our guest — Future Shock Media"
+title: "Be our guest - Future Shock Media"
 description: "Interested in being a guest on Future Shock Media? Submit a request and we'll get back to you."
 permalink: /guest-request/
 ---
@@ -10,8 +10,8 @@ permalink: /guest-request/
   <h1 class="page-title">Be our guest</h1>
   <p>Interested in being a guest on Future Shock Media? Fill out the form below and we&rsquo;ll get back to you.</p>
 
-  <form class="fs-form" action="https://formspree.io/f/xldnywyl" method="POST">
-    <input type="hidden" name="_subject" value="Future Shock Media — Guest Request">
+  <form class="fs-form js-form-worker" action="{{ site.formApiBase }}/submit/guest-request" method="POST" data-success="Thank you. Your guest request was received. We’ll review it and get back to you.">
+    <input class="form-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
 
     <div class="form-row">
       <div class="form-group">

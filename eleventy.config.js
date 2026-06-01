@@ -37,7 +37,7 @@ export default function (eleventyConfig) {
     return d.toISOString().slice(0, 10);
   });
 
-  /* Dateline formatting — "WED 15 APR 2026" for the masthead plate.
+  /* Dateline formatting - "WED 15 APR 2026" for the masthead plate.
      Locale-free so builds are deterministic; matches the broadcast/newspaper feel. */
   const DATELINE_DAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const DATELINE_MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
