@@ -172,6 +172,17 @@
             if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
           });
         });
+
+        form.addEventListener('keydown', function (e) {
+          if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+            e.preventDefault();
+            if (form.requestSubmit) {
+              form.requestSubmit();
+            } else {
+              form.dispatchEvent(new Event('submit', { cancelable: true }));
+            }
+          }
+        });
       });
     });
   </script>
