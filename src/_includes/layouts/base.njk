@@ -167,9 +167,11 @@
                 : 'Something went wrong. Please try again.';
             showMessage(msg, 'error');
             if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
+            if (window.turnstile) window.turnstile.reset();
           }).catch(function () {
             showMessage('Network error. Please try again.', 'error');
             if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
+            if (window.turnstile) window.turnstile.reset();
           });
         });
 
@@ -186,6 +188,9 @@
       });
     });
   </script>
+  {% if site.formTurnstileSiteKey %}
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  {% endif %}
 </head>
 <body>
 <div class="site-content">
