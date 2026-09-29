@@ -4,7 +4,6 @@
   "description": "Podcast and media from Future Shock Media: clear, patient, retro-futuristic. No hype, just signal.",
   "url": "https://futureshock.media",
   "formApiBase": "https://form.futureshock.media",
-  "formTurnstileSiteKey": "0x4AAAAAAFBVzwduk9QqqdIR",
   "subscribeApiBase": "https://newsletter.futureshock.media",
   "subscribeSource": "futureshock"
 }

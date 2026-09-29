@@ -84,8 +84,6 @@
             var msg;
             if (status === 400 && data.error === 'invalid_email') {
               msg = 'That email looks invalid.';
-            } else if (status === 400 && data.error === 'turnstile_failed') {
-              msg = 'Spam check failed. Please try again.';
             } else if (status === 429) {
               msg = 'Too many tries. Please wait a moment.';
             } else if (status === 502) {
@@ -167,11 +165,9 @@
                 : 'Something went wrong. Please try again.';
             showMessage(msg, 'error');
             if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
-            if (window.turnstile) window.turnstile.reset();
           }).catch(function () {
             showMessage('Network error. Please try again.', 'error');
             if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
-            if (window.turnstile) window.turnstile.reset();
           });
         });
 
@@ -188,9 +184,6 @@
       });
     });
   </script>
-  {% if site.formTurnstileSiteKey %}
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-  {% endif %}
 </head>
 <body>
 <div class="site-content">
